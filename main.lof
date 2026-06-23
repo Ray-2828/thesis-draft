@@ -1,0 +1,44 @@
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Conceptual comparison between OMA and uplink NOMA. In OMA, users occupy orthogonal resources and a single-user detector is sufficient. In NOMA, users share resources and the BS requires a multiuser detector.}}{4}{figure.caption.8}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Single-resource uplink NOMA system model with $U$ users sharing one resource.}}{8}{figure.caption.9}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Example of the GDMA BPSK mapping table for two users. Each row represents one candidate multiuser symbol vector and its corresponding superimposed signal level.}}{10}{figure.caption.11}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces GDMA detection flow: enumerate superimposed signal levels, compute APPs, marginalize APPs into user LLRs, and make hard decisions.}}{11}{figure.caption.12}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Soft-SIC receiver flow for single-resource PD-NOMA. Users are detected successively according to received power, and soft symbol estimates are subtracted from the residual signal.}}{13}{figure.caption.13}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces BER comparison of GDMA and soft-SIC PD-NOMA for two users with $(\beta _1,\beta _2)=(1,1)$.}}{14}{figure.caption.14}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces BER comparison of GDMA and soft-SIC PD-NOMA for two users with $(\beta _1,\beta _2)=(1,0.1)$.}}{15}{figure.caption.15}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces BER comparison of GDMA and soft-SIC PD-NOMA for two users with $(\beta _1,\beta _2)=(1,0.01)$.}}{16}{figure.caption.16}%
+\contentsline {figure}{\numberline {2.8}{\ignorespaces BER comparison of GDMA and soft-SIC PD-NOMA for three users with $(\beta _1,\beta _2,\beta _3)=(1,0.1,0.01)$.}}{16}{figure.caption.17}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Multi-resource PD-NOMA model. Multiple users share multiple resources, and the BS jointly processes the stacked resource-domain observations.}}{18}{figure.caption.18}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces MMSE-SIC detection procedure for multi-resource PD-NOMA: ordering, MMSE filtering, LLR calculation, soft estimation, and residual update.}}{24}{figure.caption.19}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Uncoded BER comparison of MMSE-SIC and HDS-CDMA with ML detection for $R=2$, $U=3$, and $(\beta _1,\beta _2,\beta _3)=(1,0.1,0.01)$.}}{26}{figure.caption.20}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Uncoded BER comparison of MMSE-SIC and HDS-CDMA with ML detection for $R=2$, $U=3$, and $(\beta _1,\beta _2,\beta _3)=(1,1,1)$.}}{27}{figure.caption.21}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces General IDD receiver structure. The detector and FEC decoder exchange soft information through iterations based on a priori updates.}}{30}{figure.caption.22}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces MMSE-SIC-IDD receiver. At each SIC stage, a user is detected, decoded, and softly cancelled. After all users are processed, decoder extrinsic information is used for the next a priori update.}}{31}{figure.caption.23}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces BLER comparison of HDS-MAP, MMSE-SIC-IDD, and MMSE-PIC-IDD for a coded three-user system with a $(1008,504)$ LDPC code.}}{42}{figure.caption.24}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces BLER comparison of HDS-MAP, MMSE-SIC-IDD, and MMSE-PIC-IDD for a coded four-user system with a $(1008,504)$ LDPC code.}}{43}{figure.caption.25}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces BLER comparison of HDS-MAP, MMSE-SIC-IDD, and MMSE-PIC-IDD for a coded six-user system with a $(1008,504)$ LDPC code.}}{44}{figure.caption.26}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Coded OFDM NOMA system model after CP removal and FFT. Each subcarrier provides a frequency-domain multiuser observation.}}{48}{figure.caption.28}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces OFDM multipath channel model with exponentially decayed tap powers. The first tap can be modeled as Rician while the remaining taps are Rayleigh.}}{49}{figure.caption.29}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces MMSE-SIC-IDD receiver structure for coded OFDM NOMA. Post-SINR or received-power metrics can be computed over subcarriers to determine the coded-block detection order, and a priori updates refine the soft estimates of all users.}}{50}{figure.caption.30}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces OFDM BLER comparison between quasi-static Rayleigh and one-tap Rician channel models.}}{51}{figure.caption.31}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces OFDM BLER comparison for different numbers of users.}}{51}{figure.caption.32}%
+\contentsline {figure}{\numberline {5.6}{\ignorespaces OFDM BLER comparison of post-SINR ordering and received-power/amplitude-based ordering.}}{52}{figure.caption.33}%
+\contentsline {figure}{\numberline {5.7}{\ignorespaces OFDM BLER comparison with dynamic post-SINR ordering, where the detection order is recalculated after each SIC stage.}}{53}{figure.caption.34}%
+\contentsline {figure}{\numberline {5.8}{\ignorespaces OFDM BLER comparison of MMSE-SIC-IDD and MMSE-PIC-IDD.}}{53}{figure.caption.35}%
+\contentsline {figure}{\numberline {5.9}{\ignorespaces OFDM comparison between OMA and NOMA. OMA assigns each user its own resource, while NOMA allows three users to share two resources with MMSE-SIC detection.}}{54}{figure.caption.36}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Asynchronous uplink OFDM NOMA model. Timing offsets within the cyclic prefix appear as user-dependent phase rotations across subcarriers.}}{56}{figure.caption.37}%
+\contentsline {figure}{\numberline {6.2}{\ignorespaces MAI/ISI variance approximation for asynchronous OFDM NOMA. Timing offsets within or near the CP modify the effective channel and can be modeled as additional interference variance.}}{58}{figure.caption.38}%
+\contentsline {figure}{\numberline {6.3}{\ignorespaces Asynchronous single-resource BLER result with the receiver aligned to user $1$.}}{59}{figure.caption.39}%
+\contentsline {figure}{\numberline {6.4}{\ignorespaces Asynchronous BLER result for the $(2,3,0,3)$ system, case A.}}{59}{figure.caption.40}%
+\contentsline {figure}{\numberline {6.5}{\ignorespaces Asynchronous BLER result for the $(2,3,0,3)$ system, case B.}}{60}{figure.caption.41}%
+\contentsline {figure}{\numberline {6.6}{\ignorespaces Asynchronous BLER result for the $(2,3,0,3)$ system, case C.}}{60}{figure.caption.42}%
+\contentsline {figure}{\numberline {6.7}{\ignorespaces Asynchronous BLER result for the $(2,4,0,4)$ system, case A.}}{61}{figure.caption.43}%
+\contentsline {figure}{\numberline {6.8}{\ignorespaces Asynchronous BLER result for the $(2,4,0,4)$ system, case B.}}{61}{figure.caption.44}%
+\addvspace {10\p@ }
+\contentsfinish 
+\contentsfinish 

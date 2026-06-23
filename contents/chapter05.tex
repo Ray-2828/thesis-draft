@@ -1,0 +1,85 @@
+\chapter{Coded OFDM NOMA}\label{ch:ofdm}
+
+This chapter extends the coded multi-resource receiver to an OFDM uplink. Since practical broadband channels are frequency selective, OFDM is introduced to convert the multipath channel into parallel frequency-domain observations, allowing the MMSE-SIC-IDD framework to be applied on subcarrier or resource-group signals. This chapter studies how channel selectivity, detection ordering, and the choice between SIC and PIC affect BLER.
+
+\section{OFDM System Model}
+
+Practical uplink systems often employ OFDM to handle frequency-selective channels. Consider a coded OFDM system with $N_{\mathrm{FFT}}$ subcarriers and cyclic prefix length $N_{\mathrm{CP}}$. Let $N_c$ denote the coded block length and $m$ denote the number of coded bits per modulation symbol. Related coded OFDM and iterative receiver structures have been studied for robust multiuser transmission \cite{sahin2024rsma,lin2024slotted}. Each coded block occupies
+\begin{equation}
+    N_{\mathrm{sym}}
+    =
+    \left\lceil \frac{N_c}{mN_{\mathrm{FFT}}}\right\rceil
+\end{equation}
+OFDM symbols.
+
+After CP removal and FFT, the received signal on subcarrier $q$ of OFDM symbol $j$ is
+\begin{equation}
+    y_{q,j}
+    =
+    \sum_{k=1}^{U} H_{k,q,j}x_{k,q,j}+n_{q,j}.
+    \label{eq:ofdm-subcarrier-model}
+\end{equation}
+For multi-resource NOMA, multiple subcarriers or resource elements can be stacked into a vector model similar to \eqref{eq:multi-resource-model}. Thus, the MMSE-SIC-IDD receiver can be applied subcarrier by subcarrier or blockwise across resource groups.
+
+\figplaceholder{figures/ofdm_system_model.pdf}{Coded OFDM NOMA system model after CP removal and FFT. Each subcarrier provides a frequency-domain multiuser observation.}{fig:ofdm-system-model}
+
+\section{Multipath Channel Model}
+
+The time-domain channel of user $k$ at delay tap $\ell$ is denoted by $h_{k,\ell}$. A five-tap exponentially decayed power-delay profile is considered in the presentation materials. This model is used because it provides a simple way to represent frequency selectivity while keeping the number of parameters manageable. The normalized tap power can be written as
+\begin{equation}
+    \rho_\ell
+    =
+    \frac{e^{-\ell/\lambda}}{\sum_{r=0}^{L_h-1}e^{-r/\lambda}},
+    \qquad \ell=0,1,\ldots,L_h-1,
+    \label{eq:exp-decay-profile}
+\end{equation}
+where $L_h$ is the number of channel taps and $\lambda$ controls the decay rate. Two channel types are considered:
+\begin{itemize}
+    \item quasi-static Rayleigh block fading, where all taps are Rayleigh fading paths;
+    \item one-tap Rician plus Rayleigh fading, where the first tap contains a line-of-sight component and the remaining taps are Rayleigh fading paths.
+\end{itemize}
+The frequency response on subcarrier $q$ is
+\begin{equation}
+    H_{k,q}
+    =
+    \sum_{\ell=0}^{L_h-1} h_{k,\ell}
+    e^{-j2\pi q\ell/N_{\mathrm{FFT}}}.
+    \label{eq:ofdm-frequency-response}
+\end{equation}
+
+\figplaceholder{figures/ofdm_channel_model.pdf}{OFDM multipath channel model with exponentially decayed tap powers. The first tap can be modeled as Rician while the remaining taps are Rayleigh.}{fig:ofdm-channel-model}
+
+\section{MMSE-SIC-IDD for OFDM}
+
+In OFDM NOMA, the detector computes a post-SINR or received-power metric on each subcarrier. Because one LDPC codeword spans many resource elements, the receiver must decide how symbol-level or subcarrier-level reliability should be converted into a coded-block detection order. The detection order of the whole coded block can be determined from an average reliability metric, for example
+\begin{equation}
+    \bar{\Gamma}^{\mathrm{post}}_k
+    =
+    \frac{1}{N_{\mathrm{used}}}
+    \sum_{(q,j)\in\mathcal{D}}
+    \Gamma^{\mathrm{post}}_{k,q,j},
+    \label{eq:ofdm-average-post-sinr}
+\end{equation}
+where $\mathcal{D}$ is the set of resource elements used by the coded block. A dynamic post-SINR ordering can also be used by recalculating the order after each SIC stage. This may improve ordering accuracy because the remaining interference changes after every cancellation stage, but it increases receiver complexity and control overhead. The comparison between fixed and dynamic ordering is therefore a receiver-design tradeoff rather than a purely performance-driven choice.
+
+\figplaceholder{figures/ofdm_mmse_sic_idd_block.pdf}{MMSE-SIC-IDD receiver structure for coded OFDM NOMA. Post-SINR or received-power metrics can be computed over subcarriers to determine the coded-block detection order, and a priori updates refine the soft estimates of all users.}{fig:ofdm-mmse-sic-idd}
+
+\section{OFDM Simulation Settings and Results}
+
+The OFDM simulations use BPSK modulation, $U=3$ users unless otherwise specified, a $(1008,504)$ LDPC code, $N_{\mathrm{FFT}}=16$, $N_{\mathrm{CP}}=4$, perfect CSI, and a five-tap exponentially decayed channel. The compared cases include quasi-static Rayleigh block fading and one-tap Rician fading.
+
+\figplaceholder{figures/ofdm_channel_comparison.pdf}{OFDM BLER comparison between quasi-static Rayleigh and one-tap Rician channel models.}{fig:ofdm-channel-comparison}
+
+\figplaceholder{figures/ofdm_multiuser_comparison.pdf}{OFDM BLER comparison for different numbers of users.}{fig:ofdm-multiuser-comparison}
+
+\figplaceholder{figures/ofdm_detection_order_comparison.pdf}{OFDM BLER comparison of post-SINR ordering and received-power/amplitude-based ordering.}{fig:ofdm-order-comparison}
+
+\figplaceholder{figures/ofdm_dynamic_order_comparison.pdf}{OFDM BLER comparison with dynamic post-SINR ordering, where the detection order is recalculated after each SIC stage.}{fig:ofdm-dynamic-order}
+
+\figplaceholder{figures/ofdm_sic_pic_comparison.pdf}{OFDM BLER comparison of MMSE-SIC-IDD and MMSE-PIC-IDD.}{fig:ofdm-sic-pic}
+
+\figplaceholder{figures/ofdm_oma_noma_comparison.pdf}{OFDM comparison between OMA and NOMA. OMA assigns each user its own resource, while NOMA allows three users to share two resources with MMSE-SIC detection.}{fig:ofdm-oma-noma}
+
+The OFDM results support several observations. First, channel selectivity can provide useful frequency-domain variation, which may help user separation when the receiver exploits subcarrier-dependent channel information. A one-tap Rician component and a quasi-static Rayleigh channel do not simply differ by average power; they also change the distribution of reliability across subcarriers, which affects how much the coded receiver can benefit from soft information. Second, the number of users directly affects the residual interference level and the reliability of SIC cancellation. As the loading increases, the receiver must separate more user vectors from the same resource set, and both ordering errors and residual cancellation errors become more influential.
+
+Third, post-SINR ordering is generally more robust than simple amplitude-based ordering because it accounts for both interference suppression and noise enhancement after MMSE filtering. Fourth, dynamic post-SINR ordering can be useful when the residual channel matrix changes substantially after cancellation, but its additional computation must be justified by the BLER gain. Fifth, MMSE-SIC-IDD and MMSE-PIC-IDD represent a latency-performance tradeoff: SIC can use current-stage decoder outputs, while PIC can process users more parallelly but depends more directly on the a priori soft estimates of all users. Finally, the OMA versus NOMA comparison highlights the core system tradeoff. OMA avoids multiuser interference but consumes more orthogonal resources; NOMA improves loading but requires stronger receiver processing. These results motivate the asynchronous study in the next chapter, where the OFDM receiver must also cope with user-dependent timing offsets.

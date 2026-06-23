@@ -1,0 +1,57 @@
+~\hfill \textbf {Page}\par 
+\contentsline {chapter}{Verification Letter from the Oral Examination Committee}{i}{section*.1}%
+\contentsline {chapter}{Acknowledgements}{iii}{chapter*.2}%
+\contentsline {chapter}{摘要}{v}{chapter*.3}%
+\contentsline {chapter}{Abstract}{vii}{chapter*.4}%
+\contentsline {chapter}{Contents}{ix}{section*.5}%
+\contentsline {chapter}{List of Figures}{xiii}{section*.6}%
+\contentsline {chapter}{List of Tables}{xvii}{section*.7}%
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Background and Motivation}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Orthogonal and Non-Orthogonal Multiple Access}{3}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Research Questions}{4}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Contributions}{5}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Thesis Organization}{6}{section.1.5}%
+\contentsline {chapter}{\numberline {2}Single-Resource Uplink Systems}{7}{chapter.2}%
+\contentsline {section}{\numberline {2.1}System Model}{7}{section.2.1}%
+\contentsline {section}{\numberline {2.2}GDMA Detection}{8}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Complexity of GDMA}{10}{subsection.2.2.1}%
+\contentsline {section}{\numberline {2.3}PD-NOMA with Soft SIC}{11}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Simulation Results and Discussion}{13}{section.2.4}%
+\contentsline {chapter}{\numberline {3}Multi-Resource PD-NOMA}{17}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Vector Observation Model}{17}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Relation to Other Multiuser Detection Models}{19}{section.3.2}%
+\contentsline {section}{\numberline {3.3}HDS-CDMA Joint Detection Baseline}{19}{section.3.3}%
+\contentsline {section}{\numberline {3.4}MMSE-SIC Detection}{20}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Detection Ordering}{21}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}SIC Procedure}{22}{subsection.3.4.2}%
+\contentsline {section}{\numberline {3.5}Imperfect CSI Model}{24}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Uncoded Simulation Results}{25}{section.3.6}%
+\contentsline {chapter}{\numberline {4}Coded Multi-Resource Systems with IDD}{29}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Brief introduction of IDD structure}{29}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Coded system model}{30}{section.4.2}%
+\contentsline {section}{\numberline {4.3}MMSE-SIC-IDD}{31}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Receiver Procedure}{31}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Soft Information and Variance}{33}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Variance-Aware MMSE Filtering}{35}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Decoder-Aided SIC Cancellation}{36}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.5}LLR calculation and soft estimate}{37}{subsection.4.3.5}%
+\contentsline {subsection}{\numberline {4.3.6}Algorithm Summary}{40}{subsection.4.3.6}%
+\contentsline {section}{\numberline {4.4}MMSE-PIC-IDD}{40}{section.4.4}%
+\contentsline {section}{\numberline {4.5}MAP-IDD}{41}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Coded Simulation Results}{41}{section.4.6}%
+\contentsline {section}{\numberline {4.7}Receiver Tradeoffs}{44}{section.4.7}%
+\contentsline {chapter}{\numberline {5}Coded OFDM NOMA}{47}{chapter.5}%
+\contentsline {section}{\numberline {5.1}OFDM System Model}{47}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Multipath Channel Model}{48}{section.5.2}%
+\contentsline {section}{\numberline {5.3}MMSE-SIC-IDD for OFDM}{49}{section.5.3}%
+\contentsline {section}{\numberline {5.4}OFDM Simulation Settings and Results}{50}{section.5.4}%
+\contentsline {chapter}{\numberline {6}Asynchronous OFDM NOMA}{55}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Motivation}{55}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Timing Offset Model}{56}{section.6.2}%
+\contentsline {section}{\numberline {6.3}MAI and ISI Variance Approximation}{57}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Asynchronous Simulation Results}{58}{section.6.4}%
+\contentsline {chapter}{\numberline {7}Conclusion and Future Work}{63}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Conclusion}{63}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Future Work}{64}{section.7.2}%
+\contentsfinish 

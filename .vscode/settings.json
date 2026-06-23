@@ -1,0 +1,13 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/c:\\Users\\user\\Downloads\\論文草稿\\main.aux": true,
+        "**/c:\\Users\\user\\Downloads\\論文草稿\\main.log": true,
+        "**/c:\\Users\\user\\Downloads\\論文草稿\\main.gz": true,
+        "**/c:\\Users\\user\\Downloads\\論文草稿\\main.out": true
+    }
+}

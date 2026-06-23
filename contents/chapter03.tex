@@ -1,0 +1,243 @@
+\chapter{Multi-Resource PD-NOMA}\label{ch:multi-resource}
+
+This chapter extends single-resource PD-NOMA to a multiple-resource system, where several shared-resource observations are used to improve multiuser separation. Since single-resource PD-NOMA mainly relies on received-power differences, the multiple-resource model allows the BS to further exploit resource-domain channel-vector information. In this chapter, MMSE-SIC is used as the detector, post-SINR ordering and amplitude-based ordering are considered as two detection-ordering methods, and the performance is compared with HDS-CDMA joint detection~\cite{lin2023hds}.
+
+\section{Vector Observation Model}
+
+In multi-resource PD-NOMA, each user may transmit over multiple shared resources, and the BS jointly processes the received vector. This model should be understood as a receiver-side generalization of PD-NOMA rather than a designed spreading scheme: users are not assigned carefully optimized sparse signatures, but their channel responses across the shared resources naturally form distinct vectors. Let $R$ denote the number of resources and $U$ the number of users. At one symbol time, the received vector is
+\begin{equation}
+    \bm{y} = \bm{H}\bm{x}+\bm{n},
+    \label{eq:multi-resource-model}
+\end{equation}
+where $\bm{y}\in\C^{R\times 1}$, $\bm{x}\in\C^{U\times 1}$, and $\bm{n}\sim\CN(\bm{0},N_0\bm{I})$. The channel matrix $\bm{H}\in\C^{R\times U}$ is
+\begin{equation}
+    \bm{H}=
+    \begin{bmatrix}
+    \sqrt{P_1\beta_1}h_{1,1} & \sqrt{P_2\beta_2}h_{1,2} & \cdots & \sqrt{P_U\beta_U}h_{1,U}\\
+    \sqrt{P_1\beta_1}h_{2,1} & \sqrt{P_2\beta_2}h_{2,2} & \cdots & \sqrt{P_U\beta_U}h_{2,U}\\
+    \vdots & \vdots & \ddots & \vdots\\
+    \sqrt{P_1\beta_1}h_{R,1} & \sqrt{P_2\beta_2}h_{R,2} & \cdots & \sqrt{P_U\beta_U}h_{R,U}
+    \end{bmatrix}.
+\end{equation}
+The $k$th column $\bm{h}_k$ represents the resource-domain channel vector of user $k$.
+
+For the representative two-resource and three-user case, the model is
+\begin{equation}
+    \begin{bmatrix}y_A\\y_B\end{bmatrix}
+    =
+    \begin{bmatrix}
+    h_{A,1} & h_{A,2} & h_{A,3}\\
+    h_{B,1} & h_{B,2} & h_{B,3}
+    \end{bmatrix}
+    \begin{bmatrix}x_1\\x_2\\x_3\end{bmatrix}
+    +
+    \begin{bmatrix}n_A\\n_B\end{bmatrix},
+\end{equation}
+where the large-scale fading and transmit-power factors are absorbed into each $h_{r,k}$.
+
+\figplaceholder{figures/multi_resource_model.pdf}{Multi-resource PD-NOMA model. Multiple users share multiple resources, and the BS jointly processes the stacked resource-domain observations.}{fig:multi-resource-model}
+
+\section{Relation to Other Multiuser Detection Models}
+
+The linear vector model in \eqref{eq:multi-resource-model} is similar to models used in multi-antenna reception and PDMA \cite{endo2012mmse,li2013mimo,kong2016pdma}. In multi-antenna systems, user separation is achieved through spatial-domain observations. In PDMA, separation is further assisted by user-specific pattern mapping across resources. The multi-resource PD-NOMA model considered here does not rely on sparse signatures or pattern design \cite{mohammadkarimi2018snoma}. Instead, user separation comes from the natural channel vectors across shared resources. It is therefore best interpreted as a resource-domain extension of PD-NOMA rather than a full code-domain NOMA design.
+
+This interpretation is important for the receiver comparison. If a system uses designed signatures, performance can depend strongly on the signature matrix and factor-graph structure. In the present model, the comparison focuses on the receiver's ability to exploit the channel matrix itself. HDS-CDMA is consequently used as a joint-detection baseline, whereas MMSE-SIC is used to represent a lower-complexity detector that processes the same vector observation through linear filtering and successive cancellation.
+
+\section{HDS-CDMA Joint Detection Baseline}
+
+HDS-CDMA is used as a joint-detection baseline for multi-resource systems \cite{lin2023hds}. Its role in this chapter is analogous to GDMA in the single-resource chapter: it provides a reference for the performance that can be obtained when the receiver jointly evaluates the multiuser hypotheses over all resources. For BPSK, define the candidate symbol-vector set
+\begin{equation}
+    \mathcal{X}=\{\bm{x}^{(0)},\bm{x}^{(1)},\ldots,\bm{x}^{(2^U-1)}\}.
+\end{equation}
+For a candidate vector $\bm{x}^{(\ell)}$, the likelihood is
+\begin{equation}
+    p(\bm{y}|\bm{x}^{(\ell)})
+    \propto
+    \exp\left(-\frac{\norm{\bm{y}-\bm{H}\bm{x}^{(\ell)}}^2}{N_0}\right).
+\end{equation}
+The ML detector selects the most likely vector, while the MAP detector computes bit-level APPs and LLRs by marginalizing over the candidates. The LLR of user $k$ is
+\begin{equation}
+    L_k =
+    \log
+    \frac{
+    \sum_{\ell:x_k^{(\ell)}=+1}
+    \exp\left(-\frac{\norm{\bm{y}-\bm{H}\bm{x}^{(\ell)}}^2}{N_0}\right)}
+    {\sum_{\ell:x_k^{(\ell)}=-1}
+    \exp\left(-\frac{\norm{\bm{y}-\bm{H}\bm{x}^{(\ell)}}^2}{N_0}\right)} .
+    \label{eq:hds-llr}
+\end{equation}
+This detector provides an optimal or near-optimal error-performance bound for the considered multi-resource NOMA system, but its complexity grows exponentially with $U$.
+
+\section{MMSE-SIC Detection}
+
+The MMSE-SIC receiver reduces complexity by detecting users successively after linear MMSE filtering. The filter first suppresses the interference components that are linearly separable from the desired user's channel vector, and the SIC stage then removes the detected user's contribution from the residual vector. Compared with single-resource soft SIC, this receiver can exploit both magnitude and phase differences across resources. Compared with joint ML or MAP detection, it avoids enumerating all $2^U$ candidate vectors. The main quantities needed after filtering are the desired effective channel gain, the residual interference-plus-noise variance, the LLR, and the soft estimate used for cancellation. To detect user $k$, the MMSE filter is
+\begin{equation}
+    \bm{w}_k^H
+    =
+    \bm{h}_k^H
+    \left(\bm{H}\bm{H}^H+N_0\bm{I}\right)^{-1}.
+    \label{eq:mmse-filter}
+\end{equation}
+The filter output is
+\begin{equation}
+    z_k
+    =
+    \bm{w}_k^H\bm{y}
+    =
+    \bm{w}_k^H\bm{h}_k x_k
+    +
+    \sum_{j\ne k}\bm{w}_k^H\bm{h}_j x_j
+    +
+    \bm{w}_k^H\bm{n}.
+    \label{eq:mmse-filter-output}
+\end{equation}
+The effective channel gain is
+\begin{equation}
+    a_k=\bm{w}_k^H\bm{h}_k,
+\end{equation}
+and the effective residual interference-plus-noise variance is
+\begin{equation}
+    \sigma^2_{k,\mathrm{eff}}
+    =
+    \sum_{j\ne k}\abs{\bm{w}_k^H\bm{h}_j}^2
+    +
+    N_0\norm{\bm{w}_k}^2 .
+    \label{eq:mmse-effective-variance}
+\end{equation}
+
+\subsection{Detection Ordering}
+
+Two ordering strategies are considered. The first is post-SINR ordering. The post-filtering SINR of user $k$ is
+\begin{equation}
+    \Gamma^{\mathrm{post}}_k
+    =
+    \frac{\abs{\bm{w}_k^H\bm{h}_k}^2}
+    {\sum_{j\ne k}\abs{\bm{w}_k^H\bm{h}_j}^2+N_0\norm{\bm{w}_k}^2}.
+    \label{eq:post-sinr}
+\end{equation}
+The receiver detects the user with the largest post-SINR first. This criterion uses both the magnitude and phase of the channel matrix and reflects the actual quality after filtering.
+
+The second strategy is amplitude-based ordering, where users are sorted by a channel magnitude or received-power metric such as
+\begin{equation}
+    \Gamma^{\mathrm{amp}}_k=\norm{\bm{h}_k}^2.
+\end{equation}
+This ordering is simpler because it uses only channel magnitudes, but it ignores how the MMSE filter suppresses multiuser interference. The simulations show that amplitude-based ordering can degrade significantly in equal-large-scale-fading conditions.
+
+\subsection{SIC Procedure}
+
+After the order is chosen, users are renumbered as $1,2,\ldots,U$. At stage $i$, the residual vector is $\bm{y}^{(i)}$ and the remaining channel matrix is
+\begin{equation}
+    \bm{H}^{(i)}=[\bm{h}_i,\bm{h}_{i+1},\ldots,\bm{h}_U].
+\end{equation}
+The MMSE filter is recomputed using the reduced matrix. The filter output is
+\begin{equation}
+    z_i =
+    \bm{w}_i^H\bm{y}^{(i)}
+    =
+    \bm{w}_i^H\bm{h}_i x_i
+    +
+    \sum_{j>i}\bm{w}_i^H\bm{h}_j x_j
+    +
+    \bm{w}_i^H\bm{n}.
+\end{equation}
+The effective variance is
+\begin{equation}
+    \sigma^2_{i,\mathrm{eff}}
+    =
+    \sum_{j>i}\abs{\bm{w}_i^H\bm{h}_j}^2
+    +
+    N_0\norm{\bm{w}_i}^2 .
+    \label{eq:mmse-sic-effective-variance}
+\end{equation}
+After MMSE filtering, the output can be approximated as an equivalent scalar channel
+\begin{equation}
+    z_i = a_i x_i+\eta_i,
+    \qquad
+    a_i=\bm{w}_i^H\bm{h}_i,
+    \qquad
+    \eta_i\sim\CN(0,\sigma^2_{i,\mathrm{eff}}).
+    \label{eq:mmse-sic-equivalent-scalar-channel}
+\end{equation}
+For a general bit-labeled modulation alphabet $\mathcal{S}$, let
+$b_q(s)\in\{0,1\}$ denote the $q$th label bit of symbol $s$, and define
+\begin{equation}
+    \mathcal{S}_{q,b}
+    =
+    \{s\in\mathcal{S}: b_q(s)=b\},
+    \qquad b\in\{0,1\}.
+\end{equation}
+In this chapter, the transmitted coded bits are assumed to be independent and equally likely. Therefore, each constellation symbol has the same prior probability, and the prior term cancels in the likelihood ratio. Under the scalar Gaussian approximation in \eqref{eq:mmse-sic-equivalent-scalar-channel}, the standard likelihood-marginalization form of the soft-output demapper~\cite{shapiro2005soft} gives the detector LLR of the $q$th bit as
+\begin{equation}
+    L_{i,q}
+    \approx
+    \log
+    \frac{
+    \sum\limits_{s\in\mathcal{S}_{q,0}}
+    \exp\left(-\frac{\abs{z_i-a_i s}^2}{\sigma^2_{i,\mathrm{eff}}}\right)}
+    {\sum\limits_{s\in\mathcal{S}_{q,1}}
+    \exp\left(-\frac{\abs{z_i-a_i s}^2}{\sigma^2_{i,\mathrm{eff}}}\right)},
+    \label{eq:mmse-sic-general-llr}
+\end{equation}
+where the numerator marginalizes over all constellation points whose $q$th bit is zero and the denominator marginalizes over those whose $q$th bit is one. Since the simulations in this chapter use BPSK, $\mathcal{S}=\{+1,-1\}$ with $0\mapsto +1$ and $1\mapsto -1$, and \eqref{eq:mmse-sic-general-llr} becomes
+\begin{equation}
+    L_i
+    \approx
+    \frac{4\Re\{a_i^* z_i\}}{\sigma^2_{i,\mathrm{eff}}}.
+\end{equation}
+The corresponding soft symbol estimate is the posterior mean obtained from the same equally likely symbol prior:
+\begin{equation}
+    \hat{s}_i
+    =
+    \E[x_i|z_i]
+    \approx
+    \frac{
+    \sum\limits_{s\in\mathcal{S}} s
+    \exp\left(-\frac{\abs{z_i-a_i s}^2}{\sigma^2_{i,\mathrm{eff}}}\right)}
+    {
+    \sum\limits_{s\in\mathcal{S}}
+    \exp\left(-\frac{\abs{z_i-a_i s}^2}{\sigma^2_{i,\mathrm{eff}}}\right)}.
+    \label{eq:mmse-sic-general-soft-estimate}
+\end{equation}
+For BPSK, this posterior mean reduces to $\hat{s}_i=\tanh(L_i/2)$. The expression in \eqref{eq:mmse-sic-general-soft-estimate} is therefore a detector-output soft estimate for the uncoded receiver when all transmitted bits are equally likely. The soft estimate is then subtracted:
+\begin{equation}
+    \bm{y}^{(i+1)}=\bm{y}^{(i)}-\bm{h}_i\hat{s}_i .
+\end{equation}
+If $\hat{s}_i$ is unreliable, the subtraction leaves a cancellation residual in $\bm{y}^{(i+1)}$. This residual is one of the main sources of error propagation in MMSE-SIC, and it motivates the variance-aware coded receiver developed in Chapter~\ref{ch:coded}.
+
+\figplaceholder{figures/mmse_sic_procedure.pdf}{MMSE-SIC detection procedure for multi-resource PD-NOMA: ordering, MMSE filtering, LLR calculation, soft estimation, and residual update.}{fig:mmse-sic-procedure}
+
+\section{Imperfect CSI Model}
+
+The baseline simulations assume perfect CSIR, but the presentation also introduces an imperfect CSI model similar to the one used in uplink NOMA ordered decoding studies \cite{gao2018imperfect}. The estimated channel can be written as
+\begin{equation}
+    \hat{\bm{H}}=\bm{H}+\bm{E},
+\end{equation}
+where $\bm{E}$ is the channel-estimation error. A common assumption is that the estimation error is uncorrelated with the channel estimate,
+\begin{equation}
+    \E[\hat{\bm{H}}\bm{E}^H]=\bm{0}.
+\end{equation}
+Under this model, ordering and filtering are computed from $\hat{\bm{H}}$, while residual interference increases because the cancellation vector does not perfectly match the true channel. This issue is especially important for SIC receivers because early-stage cancellation errors propagate to later stages.
+
+\section{Uncoded Simulation Results}
+
+The main uncoded multi-resource setting follows the simulation setup in the conference paper and presentation: BPSK transmission, $R=2$ resources, $U=3$ users, independent Rayleigh flat fading, and perfect CSI. The detector candidates are HDS-CDMA with ML detection and MMSE-SIC with post-SINR ordering or amplitude-based ordering. Two large-scale fading cases are used:
+\begin{equation}
+    (\beta_1,\beta_2,\beta_3)=(1,0.1,0.01)
+\end{equation}
+and
+\begin{equation}
+    (\beta_1,\beta_2,\beta_3)=(1,1,1).
+\end{equation}
+The average transmit energy per bit per user is normalized by the number of resources.
+
+\figplaceholder{figures/multiresource_ber_unequal.pdf}{Uncoded BER comparison of MMSE-SIC and HDS-CDMA with ML detection for $R=2$, $U=3$, and $(\beta_1,\beta_2,\beta_3)=(1,0.1,0.01)$.}{fig:multi-ber-unequal}
+
+\figplaceholder{figures/multiresource_ber_equal.pdf}{Uncoded BER comparison of MMSE-SIC and HDS-CDMA with ML detection for $R=2$, $U=3$, and $(\beta_1,\beta_2,\beta_3)=(1,1,1)$.}{fig:multi-ber-equal}
+
+The results in Fig.~\ref{fig:multi-ber-unequal} and Fig.~\ref{fig:multi-ber-equal} show that HDS-CDMA with ML joint detection achieves better uncoded BER than MMSE-SIC in both fading cases. For the unequal large-scale fading case $(1,0.1,0.01)$, HDS-CDMA performs about $3$ dB better than MMSE-SIC at $\mathrm{BER}=10^{-4}$ for user 1. For the equal large-scale fading case $(1,1,1)$, HDS-CDMA performs about $7$ dB better than MMSE-SIC at $\mathrm{BER}=10^{-4}$. Therefore, the performance loss of MMSE-SIC is much more significant when the users have similar average received powers.
+
+The smaller gap in the unequal-fading case is caused by the large-scale fading disparity. Since the users have clearly separated average received powers, the first SIC stage is more reliable and the cancellation error is less likely to dominate the following stages. In particular, for the user with the smallest average received power, MMSE-SIC is close to HDS-CDMA within the simulated SNR range. However, HDS-CDMA still provides the best overall BER performance because ML joint detection evaluates the multiuser symbol hypotheses jointly instead of making sequential hard or soft cancellation decisions.
+
+The ordering comparison further explains the behavior of MMSE-SIC. In the unequal-fading case, amplitude-based ordering only causes a slight degradation around the high-SNR region, for example around $25$ dB for user 1. In the equal-fading case, however, amplitude-based ordering degrades heavily because the users do not have a clear large-scale power separation. Post-SINR ordering is more robust because it measures the quality after MMSE filtering, including residual multiuser interference and noise enhancement, whereas amplitude-based ordering only uses the channel magnitude before filtering. This confirms that large-scale fading disparity provides a clearer detection order for SIC, while equal-power users make SIC more sensitive to ordering errors and error propagation.
+
+These results indicate that multi-resource PD-NOMA improves user separation compared with single-resource soft SIC, but joint detection remains the stronger uncoded benchmark. The remaining performance gap motivates the next chapter. Rather than increasing receiver complexity to full joint detection, Chapter~\ref{ch:coded} introduces channel coding and IDD so that decoder reliability can be used to reduce SIC error propagation.

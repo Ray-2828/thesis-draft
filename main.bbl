@@ -1,0 +1,128 @@
+\begin{thebibliography}{18}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Dai et~al.(2018)Dai, Wang, Ding, Wang, Chen, and Hanzo]{dai2018noma}
+L.~Dai, B.~Wang, Z.~Ding, Z.~Wang, S.~Chen, and L.~Hanzo.
+\newblock A survey of non-orthogonal multiple access for 5g.
+\newblock \emph{IEEE Communications Surveys \& Tutorials}, 20\penalty0
+  (3):\penalty0 2294--2323, 2018.
+
+\bibitem[Ding et~al.(2015)Ding, Fan, and Poor]{ding2015pairing}
+Z.~Ding, P.~Fan, and H.~V. Poor.
+\newblock Impact of user pairing on 5g nonorthogonal multiple-access downlink
+  transmissions.
+\newblock \emph{IEEE Transactions on Vehicular Technology}, 65\penalty0
+  (8):\penalty0 6010--6023, 2015.
+
+\bibitem[Endo et~al.(2012)Endo, Kishiyama, and Higuchi]{endo2012mmse}
+Y.~Endo, Y.~Kishiyama, and K.~Higuchi.
+\newblock Uplink non-orthogonal access with mmse-sic in the presence of
+  inter-cell interference.
+\newblock In \emph{2012 International Symposium on Wireless Communication
+  Systems (ISWCS)}, pages 261--265, 2012.
+
+\bibitem[Gao et~al.(2018)]{gao2018imperfect}
+Y.~Gao et~al.
+\newblock Analysis of the dynamic ordered decoding for uplink noma systems with
+  imperfect csi.
+\newblock \emph{IEEE Transactions on Vehicular Technology}, 67\penalty0
+  (7):\penalty0 6647--6651, 2018.
+
+\bibitem[Haci et~al.(2017)Haci, Zhu, and Wang]{haci2017async}
+H.~Haci, H.~Zhu, and J.~Wang.
+\newblock Performance of non-orthogonal multiple access with a novel
+  asynchronous interference cancellation technique.
+\newblock \emph{IEEE Transactions on Communications}, 65\penalty0 (3):\penalty0
+  1319--1335, 2017.
+
+\bibitem[Hsu et~al.(2019)Hsu, Chang, Chang, Su, Yeh, Cheng, Lin, and
+  Lin]{hsu2019gdma}
+Y.-T. Hsu, B.-H. Chang, C.-F. Chang, P.-W. Su, I.-H. Yeh, K.-C. Cheng, Y.-C.
+  Lin, and M.-C. Lin.
+\newblock Gain division multiple access for transmissions over independent
+  fading channels.
+\newblock In \emph{2019 IEEE VTS Asia Pacific Wireless Communications Symposium
+  (APWCS)}, pages 1--5, 2019.
+
+\bibitem[Islam et~al.(2016)Islam, Avazov, Dobre, and Kwak]{islam2016pdnoma}
+S.~R. Islam, N.~Avazov, O.~A. Dobre, and K.-S. Kwak.
+\newblock Power-domain non-orthogonal multiple access (noma) in 5g systems:
+  Potentials and challenges.
+\newblock \emph{IEEE Communications Surveys \& Tutorials}, 19\penalty0
+  (2):\penalty0 721--742, 2016.
+
+\bibitem[Kong et~al.(2016)Kong, Zeng, Su, Rong, and Xu]{kong2016pdma}
+D.~Kong, J.~Zeng, X.~Su, L.~Rong, and X.~Xu.
+\newblock Multiuser detection algorithm for pdma uplink system based on sic and
+  mmse.
+\newblock In \emph{2016 IEEE/CIC International Conference on Communications in
+  China (ICCC)}, pages 1--6, 2016.
+
+\bibitem[Li(2013)]{li2013mimo}
+L.~Li.
+\newblock \emph{Advanced Channel Estimation and Detection Techniques for MIMO
+  and OFDM Systems}.
+\newblock PhD thesis, University of York, 2013.
+
+\bibitem[Li et~al.(2024)Li, Yuan, Qiu, Li, and Xie]{li2024turbo}
+Q.~Li, J.~Yuan, M.~Qiu, S.~Li, and Y.~Xie.
+\newblock Low complexity turbo sic-mmse detection for orthogonal time frequency
+  space modulation.
+\newblock \emph{IEEE Transactions on Communications}, 72\penalty0 (6):\penalty0
+  3169--3183, 2024.
+
+\bibitem[Lin et~al.(2023{\natexlab{a}})Lin, Lee, Fan, and Chen]{lin2023hds}
+M.-C. Lin, S.-K. Lee, H.-H. Fan, and Y.-H. Chen.
+\newblock Gdma, lds-cdma, and hds-cdma for uplink communication systems.
+\newblock In \emph{2023 VTS Asia Pacific Wireless Communications Symposium
+  (APWCS)}, pages 1--5, 2023{\natexlab{a}}.
+
+\bibitem[Lin et~al.(2023{\natexlab{b}})Lin, Yang, Chang, and Lee]{lin2023aloha}
+M.-C. Lin, Y.-Q. Yang, C.-Y. Chang, and S.-K. Lee.
+\newblock An uplink random access scheme based on aloha system assisted by gain
+  division multiple access.
+\newblock \emph{IEEE Access}, 11:\penalty0 28887--28895, 2023{\natexlab{b}}.
+
+\bibitem[Lin et~al.(2024)Lin, Lee, and Lin]{lin2024slotted}
+M.-C. Lin, S.-K. Lee, and F.-H. Lin.
+\newblock Slotted aloha systems based on multiple access schemes and multiple
+  resources.
+\newblock In \emph{2024 International Symposium on Intelligent Signal
+  Processing and Communication Systems (ISPACS)}, pages 1--5, 2024.
+
+\bibitem[Mohammadkarimi et~al.(2018)Mohammadkarimi, Raza, and
+  Dobre]{mohammadkarimi2018snoma}
+M.~Mohammadkarimi, M.~A. Raza, and O.~A. Dobre.
+\newblock Signature-based non-orthogonal multiple access (s-noma) for massive
+  machine-type communications in 5g.
+\newblock arXiv preprint arXiv:1808.07163, 2018.
+
+\bibitem[Nikopour and Baligh(2013)]{nikopour2013scma}
+H.~Nikopour and H.~Baligh.
+\newblock Sparse code multiple access.
+\newblock In \emph{2013 IEEE 24th Annual International Symposium on Personal,
+  Indoor, and Mobile Radio Communications (PIMRC)}, pages 332--336, 2013.
+
+\bibitem[Sahin et~al.(2024)Sahin, Dizdar, Clerckx, and Arslan]{sahin2024rsma}
+M.~M. Sahin, O.~Dizdar, B.~Clerckx, and H.~Arslan.
+\newblock Ofdm-rsma: Robust transmission under inter-carrier interference.
+\newblock \emph{IEEE Transactions on Communications}, 2024.
+
+\bibitem[Shapiro and Dunyak(2005)]{shapiro2005soft}
+J.~M. Shapiro and J.~Dunyak.
+\newblock Soft information in interference cancellation based multiuser
+  detection, 2005.
+\newblock Submitted for IEEE Transactions on Wireless Communications.
+
+\bibitem[Studer et~al.(2011)Studer, Fateh, and Seethaler]{studer2011siso}
+C.~Studer, S.~Fateh, and D.~Seethaler.
+\newblock Asic implementation of soft-input soft-output mimo detection using
+  mmse parallel interference cancellation.
+\newblock \emph{IEEE Journal of Solid-State Circuits}, 46\penalty0
+  (7):\penalty0 1754--1765, 2011.
+
+\end{thebibliography}

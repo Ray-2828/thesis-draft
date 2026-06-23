@@ -1,0 +1,21 @@
+% !TeX root = ../main.tex
+
+\begin{abstract}
+
+本論文研究上行非正交多工（non-orthogonal multiple access, NOMA）系統之多使用者接收技術，並由單一資源、未編碼多資源、編碼多資源、OFDM，以及非同步傳輸等情境逐步比較不同接收器的效能與複雜度取捨。相較於正交多工將使用者分配至彼此正交的時間、頻率或碼域資源，NOMA 允許多個使用者共享相同資源以提升系統負載與頻譜使用效率。然而，上行 NOMA 的可靠度主要取決於基地台接收端是否能有效分離重疊的使用者訊號，因此接收器架構成為系統可行性的關鍵。
+
+首先，本論文在單一資源模型下比較功率域 NOMA 搭配軟式連續干擾消除（soft successive interference cancellation, soft SIC）與增益域多工（gain division multiple access, GDMA）。GDMA 利用複數通道增益的振幅與相位進行聯合偵測，而 PD-NOMA 主要仰賴接收功率差異與 SIC 順序。模擬結果顯示，GDMA 在未編碼位元錯誤率方面通常優於 soft SIC，特別是在使用者接收功率相近或使用者數增加時更為明顯。接著，本論文將 PD-NOMA 延伸至多資源向量觀測模型，並以 MMSE-SIC 接收器與 HDS-CDMA 聯合偵測基準進行比較。多資源觀測可利用跨資源通道向量改善使用者分離能力，但在未編碼情況下，HDS-CDMA 仍因聯合多使用者偵測而具有較佳效能。
+
+為了降低 SIC 錯誤傳播，本論文進一步發展編碼多資源 MMSE-SIC-IDD 接收器。此接收器結合解碼器輔助之軟式干擾消除、變異數感知 MMSE 濾波，以及偵測器與解碼器之間的外部迭代回饋。模擬結果顯示，導入通道編碼與 IDD 後，MMSE-SIC-IDD 可明顯縮小與 MAP-based 聯合偵測之間的差距，並在較低複雜度下提供具競爭力的 BLER 表現。本論文亦討論 MMSE-PIC-IDD 與 MAP-IDD 作為延遲、複雜度與效能之比較基準。最後，本文將接收器延伸至 coded OFDM NOMA 與非同步 OFDM NOMA，分析頻率選擇性通道、偵測順序、SIC/PIC 架構，以及時間偏移所造成之相位旋轉與額外干擾對接收器穩健性的影響。
+
+\end{abstract}
+
+\begin{abstract*}
+
+This thesis studies multiuser receiver design for uplink non-orthogonal multiple access (NOMA) systems. The comparison progresses from uncoded single-resource detection to uncoded and coded multi-resource reception, and is further extended to coded OFDM and asynchronous OFDM uplink scenarios. In contrast to orthogonal multiple access (OMA), where users are assigned disjoint time, frequency, or code resources, NOMA allows multiple users to share the same resource in order to improve system loading and spectral efficiency. The price of this resource sharing is that the base station must separate superimposed user signals reliably; therefore, the receiver architecture is a decisive factor in uplink NOMA performance.
+
+The thesis first compares single-resource power-domain NOMA (PD-NOMA) with soft successive interference cancellation (soft SIC) and gain division multiple access (GDMA). GDMA exploits both the magnitudes and phases of complex channel gains through joint detection, whereas PD-NOMA mainly relies on received-power disparity and successive cancellation. The results show that GDMA generally achieves better uncoded BER than soft SIC, especially when users have similar received powers or when the number of users increases. The thesis then extends PD-NOMA to a multi-resource vector observation model and evaluates MMSE-SIC against HDS-CDMA joint detection. Multi-resource observations improve user separability by exploiting channel vectors across shared resources, but HDS-CDMA remains the stronger uncoded benchmark because of its joint multiuser detection capability.
+
+To mitigate SIC error propagation, a coded multi-resource MMSE-SIC-IDD receiver is developed. The receiver integrates decoder-aided soft interference cancellation, variance-aware MMSE filtering, and outer detector-decoder feedback. Simulation results show that, after channel coding and IDD are introduced, MMSE-SIC-IDD becomes much more competitive with MAP-based joint detection while maintaining lower complexity. MMSE-PIC-IDD and MAP-IDD are also considered as references for the latency, complexity, and performance tradeoff. Finally, the receiver framework is extended to coded OFDM NOMA and asynchronous OFDM NOMA, where frequency selectivity, detection ordering, SIC/PIC receiver structures, timing-offset-induced phase rotations, and additional MAI/ISI effects are discussed.
+
+\end{abstract*}

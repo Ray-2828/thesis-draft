@@ -1,0 +1,50 @@
+\chapter{Introduction}
+
+This chapter introduces the background and motivation of uplink non-orthogonal multiple access (NOMA) receiver design. Starting from the demand for higher spectral efficiency and massive connectivity, this chapter explains why intentional resource sharing requires effective multiuser detection, and then summarizes the NOMA schemes, research questions, contributions, and thesis organization considered in this work.
+
+\section{Background and Motivation}
+
+Multiple access (MA) techniques determine how multiple users share limited communication resources. In conventional orthogonal multiple access (OMA), users are assigned disjoint resources in time, frequency, code, or subcarrier index. Since users do not overlap on the same resource, inter-user interference (IUI) is avoided and a single-user detector (SUD) is usually sufficient. This simplicity is attractive, but the number of simultaneously supportable users is fundamentally limited by the number of orthogonal resource units.
+
+Future wireless systems require much higher connection density. Massive machine-type communications (mMTC), random access, and low-latency uplink services require the base station (BS) to support many devices that may transmit short packets sporadically. In such scenarios, assigning one orthogonal resource to each active device can be inefficient and may introduce additional scheduling latency. Non-orthogonal multiple access (NOMA) improves resource utilization by allowing multiple users to transmit over the same resource \cite{islam2016pdnoma,dai2018noma}. The cost of this improved loading is that the receiver must separate superimposed user signals.
+
+In the uplink, the receiver is therefore the central component of a NOMA system. Unlike the downlink, where the BS can precode or allocate power with relatively complete control, the uplink receiver must separate independently transmitted user signals after they have been distorted by fading, noise, synchronization mismatch, and possibly imperfect channel estimation. The same multiple-access loading can lead to very different performance depending on whether the receiver performs joint detection, linear filtering, successive cancellation, or iterative detection and decoding. This thesis focuses on this receiver-side viewpoint and compares three related NOMA directions:
+\begin{itemize}
+    \item GDMA and HDS-CDMA, which exploit complex channel gains or resource-domain signatures and are naturally associated with joint ML or MAP detection;
+    \item single-resource PD-NOMA, which separates users mainly by received-power disparity and is commonly implemented with SIC;
+    \item multi-resource PD-NOMA, which preserves the low-complexity SIC structure while extending the observation from a scalar received signal to a vector across multiple shared resources.
+\end{itemize}
+
+\section{Orthogonal and Non-Orthogonal Multiple Access}
+
+An MA resource can be a frequency band, a time slot, a spreading signature, or an OFDM subcarrier. In OMA, each user occupies a distinct orthogonal resource; ideally, no IUI is present. In NOMA, multiple users intentionally share a resource, so a multiuser detector (MUD) is required. The tradeoff is summarized as follows. OMA has low receiver complexity and predictable reliability, but its user capacity is limited by the number of orthogonal resources. NOMA can support more users and reduce access latency, but receiver complexity, error propagation, and synchronization sensitivity become important design issues.
+
+NOMA schemes can be categorized by the domain used for user separation. In power-domain NOMA, users are distinguished by received-power differences and decoded successively \cite{islam2016pdnoma}. This approach has low receiver complexity, but its reliability depends strongly on the existence of a clear power gap and on the correctness of the early SIC decisions. In gain-domain schemes such as GDMA, users are distinguished by their complex channel gains, including both magnitude and phase \cite{hsu2019gdma,lin2023aloha}. This provides a richer separation mechanism, but usually requires joint evaluation of multiuser hypotheses. Code-domain NOMA schemes such as SCMA, LDS-CDMA, and HDS-CDMA use sparse or dense resource-domain signatures \cite{nikopour2013scma,lin2023hds}. The multi-resource PD-NOMA model considered in this thesis lies between these categories: it does not impose a designed sparse signature, but it uses the vector channel gains across multiple shared resources to improve separability.
+
+\figplaceholder{figures/multiple_access_overview.pdf}{Conceptual comparison between OMA and uplink NOMA. In OMA, users occupy orthogonal resources and a single-user detector is sufficient. In NOMA, users share resources and the BS requires a multiuser detector.}{fig:ma-overview}
+
+\section{Research Questions}
+
+The presentation and conference-paper materials motivate three practical questions.
+\begin{enumerate}
+    \item In a single shared resource, how does soft-SIC PD-NOMA compare with GDMA under uncoded BPSK transmission?
+    \item When the receiver observes multiple shared resources, how much can MMSE-SIC improve PD-NOMA, and how close is it to HDS-CDMA with joint ML or MAP detection?
+    \item In coded systems, can decoder-aided soft cancellation and outer detector-decoder iterations reduce SIC error propagation enough for MMSE-SIC-IDD to approach coded joint-detection baselines?
+\end{enumerate}
+
+The later chapters further extend the comparison to coded OFDM and asynchronous NOMA. These extensions are important because practical uplink systems often use OFDM, frequency-selective channels, cyclic prefixes, and imperfect timing alignment.
+
+\section{Contributions}
+
+The main contributions of this thesis draft are:
+\begin{itemize}
+    \item A unified single-resource uplink model is used to compare GDMA and PD-NOMA with soft SIC. The comparison highlights the difference between channel-gain-based joint detection and power-domain successive cancellation.
+    \item A multi-resource PD-NOMA model is formulated as a vector observation problem. MMSE-SIC detection with post-SINR ordering and amplitude-based ordering is derived and compared with HDS-CDMA.
+    \item A coded MMSE-SIC-IDD receiver is developed. The receiver combines decoder-aided interference cancellation, variance-aware MMSE filtering, and outer detector-decoder feedback.
+    \item MMSE-PIC-IDD and MAP-IDD are included as coded receiver references, allowing the receiver-complexity and performance tradeoff to be discussed for three, four, and six users.
+    \item The framework is extended to coded OFDM NOMA over quasi-static multipath channels and to asynchronous uplink transmission with timing offsets within the cyclic prefix.
+\end{itemize}
+
+\section{Thesis Organization}
+
+Chapter~\ref{ch:single-resource} studies single-resource uplink systems, including GDMA and PD-NOMA with soft SIC. This chapter is placed first because it isolates the most basic difference between channel-gain-based joint detection and received-power-based successive cancellation. Chapter~\ref{ch:multi-resource} extends PD-NOMA to multiple resources and derives the MMSE-SIC receiver. It is included to examine whether vector observations can recover part of the separability lost by scalar PD-NOMA while retaining lower complexity than joint detection. Chapter~\ref{ch:coded} presents coded multi-resource NOMA with IDD, including MMSE-SIC-IDD, MMSE-PIC-IDD, and MAP-IDD. This chapter addresses the fact that practical receivers operate with channel coding and can use decoder reliability to improve interference cancellation. Chapter~\ref{ch:ofdm} extends the coded receiver to OFDM so that frequency-selective channels, cyclic prefixes, and subcarrier-domain detection can be considered. Chapter~\ref{ch:async} discusses asynchronous OFDM NOMA, which is necessary because uplink random access rarely provides perfect timing alignment among users. Chapter~\ref{ch:conclusion} concludes the thesis and lists future research directions.

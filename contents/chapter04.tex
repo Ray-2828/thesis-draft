@@ -1,0 +1,475 @@
+\chapter{Coded Multi-Resource Systems with IDD}\label{ch:coded}
+
+This chapter introduces channel coding and iterative detection and decoding (IDD) into the multi-resource PD-NOMA receiver. Motivated by the error-propagation problem observed in uncoded SIC receivers, the detector exchanges soft information with the FEC decoder and refines interference cancellation through iterations based on updated a priori information. This chapter develops MMSE-SIC-IDD and compares it with MMSE-PIC-IDD and MAP-IDD to clarify the performance-complexity tradeoff in coded multi-resource uplink NOMA.
+
+\section{Brief introduction of IDD structure}
+
+For coded systems, the detector is typically embedded in an iterative detection and decoding (IDD) receiver. In this structure, soft information is exchanged between the detector and the FEC decoder \cite{li2024turbo,sahin2024rsma,lin2024slotted}. The detector produces bit-level LLRs for the coded bits and passes them to the FEC decoder, while the decoder uses the code constraints to refine the reliability information and returns updated soft information to the detector. This detector-decoder exchange follows the IDD structure shown in Fig.~\ref{fig:idd-general}.
+
+\figplaceholder{figures/idd_general_block.pdf}{General IDD receiver structure. The detector and FEC decoder exchange soft information through iterations based on a priori updates.}{fig:idd-general}
+
+The iteration based on a priori update, denoted by $t$, is performed after all users have been decoded. The decoder outputs of all users are used to update their corresponding a priori information, and these updated a priori LLRs are then fed back to the detector. Through the a priori update iteration $t$, the updated a priori information is especially beneficial for both MMSE-SIC and MMSE-PIC. For MMSE-SIC, the updated information helps the stage-by-stage SIC process together with decoded-user feedback. For MMSE-PIC, it is even more critical because parallel cancellation relies directly on the a priori-based soft means of all interfering users.
+
+\section{Coded system model}
+
+Let each user transmit a coded bit block
+\begin{equation}
+    \bm{c}_i=[c_{i,1},c_{i,2},\ldots,c_{i,N_{c,i}}]^T .
+\end{equation}
+After modulation, the coded bits are grouped into $N_s$ modulation symbols. At symbol time $\ell$, the transmitted vector is
+\begin{equation}
+    \bm{x}_\ell=[s_{1,\ell},s_{2,\ell},\ldots,s_{U,\ell}]^T,
+\end{equation}
+and the received vector is
+\begin{equation}
+    \bm{y}_\ell=\bm{H}_\ell\bm{x}_\ell+\bm{n}_\ell.
+    \label{eq:coded-symbol-model}
+\end{equation}
+The received block is $\bm{Y}=[\bm{y}_1,\bm{y}_2,\ldots,\bm{y}_{N_s}]$. In the block-fading simulations, $\bm{H}_1=\bm{H}_2=\cdots=\bm{H}_{N_s}$.
+
+\section{MMSE-SIC-IDD}
+
+\figplaceholder{figures/mmse_sic_idd_block.pdf}{MMSE-SIC-IDD receiver. At each SIC stage, a user is detected, decoded, and softly cancelled. After all users are processed, decoder extrinsic information is used for the next a priori update.}{fig:mmse-sic-idd-block}
+
+\subsection{Receiver Procedure}
+
+In this section, we introduce the procedure of the MMSE-SIC-IDD receiver. The key feature of the structure is that interference cancellation in the SIC process is performed after channel decoding rather than immediately after detection.
+
+The received coded block is written as
+\begin{equation}
+    \bm{Y}
+    =
+    [\bm{y}_1,\bm{y}_2,\ldots,\bm{y}_{N_s}],
+\end{equation}
+where $N_s$ is the number of received coded symbols in the block. For the BPSK coded system, let $\bm{c}_i=[c_{i,1},c_{i,2},\ldots,c_{i,N_s}]^T$ denote the transmitted coded-symbol sequence of user $i$, let $\bm{H}_\ell$ denote the $\ell$th multiple-access channel, and let $\bm{x}_\ell=[c_{1,\ell},c_{2,\ell},\ldots,c_{U,\ell}]^T$ denote the transmitted signal vector at time index $\ell$. The $\ell$th column of $\bm{Y}$ is
+\begin{equation}
+    \bm{y}_\ell
+    =
+    \bm{H}_\ell\bm{x}_\ell+\bm{n}_\ell .
+\end{equation}
+For higher-order modulation, $c_{i,\ell}$ is replaced by the modulation symbol $s_{i,\ell}$, while the same IDD structure is used.
+
+Without loss of generality, we assume that the detection order has been determined according to the ordering criterion in \eqref{eq:post-sinr}, and that the users are re-numbered from $1$ to $U$ according to this order. After re-numbering,
+\begin{equation}
+    \Gamma^{\mathrm{post}}_1
+    \geq
+    \Gamma^{\mathrm{post}}_2
+    \geq
+    \cdots
+    \geq
+    \Gamma^{\mathrm{post}}_U ,
+\end{equation}
+and user $i$ is detected at the $i$th SIC stage. For user $i$, the MMSE-SIC detector first computes the bit-level LLRs $\bm{L}_{\bm{c}_i}$ using \eqref{eq:mmse-sic-general-llr}. The detector also produces the coded soft-estimate vector
+\begin{equation}
+    \hat{\bm{s}}_i
+    =
+    [\hat{s}_{i,1},\hat{s}_{i,2},\ldots,\hat{s}_{i,N_s}]^T .
+\end{equation}
+The LLRs $\bm{L}_{\bm{c}_i}$ are passed to the FEC decoder of user $i$. After decoding, the decoder produces the a posteriori LLRs $\bm{L}^{d}_{\bm{c}_i}$, which are used to generate the decoded soft symbol estimate $\hat{\bm{s}}^d_i$ according to the posterior-mean principle in \eqref{eq:mmse-sic-general-soft-estimate}. This decoded soft symbol estimate is then fed back to the MMSE-SIC detector for the next SIC stage, i.e., user $i+1$, where it is used to subtract the interference caused by user $i$. Intuitively, performing cancellation after decoding can improve the reliability of the cancelled signal and thus reduce error propagation in the SIC process.
+
+Due to the successive decoding procedure, the extrinsic information of each user is collected asynchronously. Specifically, after decoding user $i$, the extrinsic LLRs are obtained as
+\begin{equation}
+    \bm{L}^{e}_{\bm{c}_i}
+    =
+    \bm{L}^{d}_{\bm{c}_i}
+    -
+    \bm{L}_{\bm{c}_i}
+\end{equation}
+for each user. A variance matrix is then used to collect the reliability information from all users. Once the extrinsic information of all users has been collected, it is used to update the a priori information for the next IDD iteration. In this way, the decoded extrinsic information of all users is provided as a priori information to the MMSE-SIC detector in the following IDD iteration.
+
+\subsection{Soft Information and Variance}
+
+Let $\mathcal{S}_i$ denote the modulation alphabet of user $i$, and let
+$M_i=\log_2|\mathcal{S}_i|$ be the number of coded bits per modulation symbol. For a symbol
+$s\in\mathcal{S}_i$, its binary label is written as
+\begin{equation}
+    \bm{b}_i(s)
+    =
+    [b_{i,0}(s),b_{i,1}(s),\ldots,b_{i,M_i-1}(s)] .
+\end{equation}
+Let $L^{a,(t)}_{i,\ell,m}$ denote the a priori LLR of the $m$th coded bit in the $\ell$th modulation symbol of user $i$ at a priori update iteration $t$, with
+\begin{equation}
+    L^{a,(t)}_{i,\ell,m}
+    =
+    \log
+    \frac{P^{a,(t)}(b_{i,\ell,m}=0)}
+    {P^{a,(t)}(b_{i,\ell,m}=1)},
+    \qquad
+    L^{a,(0)}_{i,\ell,m}=0 .
+\end{equation}
+The corresponding bit probability is
+\begin{equation}
+    P^{a,(t)}(b_{i,\ell,m}=b)
+    =
+    \frac{1}
+    {1+\exp\left[-(1-2b)L^{a,(t)}_{i,\ell,m}\right]},
+    \qquad b\in\{0,1\}.
+    \label{eq:bit-prior-from-llr}
+\end{equation}
+Assuming the interleaved coded bits are represented by independent bit priors at the demapper input, the a priori symbol probability is
+\begin{equation}
+    P^{a,(t)}_{i,\ell}(s)
+    =
+    \prod_{m=0}^{M_i-1}
+    P^{a,(t)}(b_{i,\ell,m}=b_{i,m}(s)).
+    \label{eq:symbol-prior-from-bit-priors}
+\end{equation}
+The soft symbol mean used for a priori update before detection is calculated according to the a priori symbol probability, that is,
+\begin{equation}
+    \mu^{(t)}_{i,\ell}
+    =
+    \E[s_{i,\ell}\mid \bm{L}^{a,(t)}_{i,\ell}]
+    =
+    \frac{
+    \sum\limits_{s\in\mathcal{S}_i}
+    s P^{a,(t)}_{i,\ell}(s)}
+    {\sum\limits_{s\in\mathcal{S}_i}
+    P^{a,(t)}_{i,\ell}(s)} ,
+    \label{eq:idd-general-soft-mean}
+\end{equation}
+and the corresponding symbol variance is
+\begin{equation}
+    \sigma^{2~(t)}_{i,\ell}
+    =
+    \frac{
+    \sum\limits_{s\in\mathcal{S}_i}
+    \abs{s}^2 P^{a,(t)}_{i,\ell}(s)}
+    {\sum\limits_{s\in\mathcal{S}_i}
+    P^{a,(t)}_{i,\ell}(s)}
+    -
+    \abs{\mu^{(t)}_{i,\ell}}^2 .
+    \label{eq:idd-general-soft-var}
+\end{equation}
+For BPSK with $0\mapsto +1$ and $1\mapsto -1$, \eqref{eq:idd-general-soft-mean} and \eqref{eq:idd-general-soft-var} reduce to
+\begin{equation}
+    \mu^{(t)}_{i,\ell}
+    =
+    \tanh\left(\frac{L^{a,(t)}_{i,\ell,0}}{2}\right),
+    \qquad
+    \sigma^{2~(t)}_{i,\ell}
+    =
+    1-\abs{\mu^{(t)}_{i,\ell}}^2 .
+\end{equation}
+The average variance of user $i$ over the coded block is
+\begin{equation}
+    \bar{v}^{(t)}_{i}
+    =
+    \frac{1}{N_s}\sum_{\ell=1}^{N_s}\sigma^{2~(t)}_{i,\ell},
+\end{equation}
+where $N_s$ is the number of modulation symbols in the coded block. The variance matrix is defined as
+\begin{equation}
+    \bm{V}
+    =
+    \operatorname{diag}(\bar{v}_1^{(t)},\bar{v}_2^{(t)},\ldots,\bar{v}_U^{(t)}),
+    \qquad
+    \bar{v}_i^{(t)}>0.
+    \label{eq:variance-matrix}
+\end{equation}
+When decoder feedback is reliable, $\bar{v}_i^{(t)}$ becomes small and the receiver treats user $i$ as easier to cancel. When decoder feedback is uncertain, the variance remains large and the receiver avoids overconfident cancellation. This reliability weighting is essential in an IDD receiver.
+
+\subsection{Variance-Aware MMSE Filtering}
+
+When all users' extrinsic information from the FEC decoder has been collected, the block-averaged variance of each user is placed in the variance matrix $\bm{V}$ in \eqref{eq:variance-matrix}. The variance-aware MMSE filter used in the coded receiver is
+\begin{equation}
+    \label{eq:variance-aware-mmse}
+    \tilde{\bm{w}}^H_k
+    =
+    \bar{v}_k^{(t)}\bm{h}_k^H
+    \left(
+    \bm{H}\bm{V}\bm{H}^H + 2\sigma^2\bm{I}
+    \right)^{-1}.
+\end{equation}
+Compared with \eqref{eq:mmse-filter}, the covariance matrix includes $\bm{V}$, so users with reliable a priori information contribute less uncertainty to the MMSE filtering process.
+
+\subsection{Decoder-Aided SIC Cancellation}
+
+To simplify the expression in the following equations, we omit the subscript $\ell$, which denotes that the process is dealing with $\bm{y}_{\ell}$. The procedure then goes back to MMSE-SIC stage 1. User 1 benefits from the a priori information of users $2,\ldots,U$ by using
+\begin{equation}
+    \label{eq:idd-stage-one-residual}
+    \bm{y}_{(1)}^{(t)}
+    =
+    \bm{y}
+    -
+    \sum_{j=2}^{U}
+    \bm{h}_{j}\mu^{(t)}_{j}.
+\end{equation}
+At SIC stage $i>1$, the detection of user $i$ benefits from the FEC outputs of users $1,2,\ldots,i-1$ and from the a priori information of users $i+1,\ldots,U$. The residual vector for detecting user $i$ is constructed as
+\begin{equation}
+    \label{eq:idd-stage-i-residual}
+    \bm{y}_{(i)}^{(t)}
+    =
+    \bm{y}
+    -
+    \sum_{j=1}^{i-1}
+    \bm{h}_{j}\hat{s}^{d}_{j}
+    -
+    \sum_{j=i+1}^{U}
+    \bm{h}_{j}\mu^{(t)}_{j}.
+\end{equation}
+The first summation cancels the users that have already been decoded in the current SIC pass by using the decoder-aided soft symbol estimates $\hat{s}^{d}_{j}$. The second summation cancels the users that have not yet been decoded in the current pass by using the a priori soft symbol means $\mu^{(t)}_{j}$. This is the coded extension of the uncoded subtraction in Chapter~\ref{ch:multi-resource}.
+
+The cancellation term in \eqref{eq:idd-stage-i-residual} is different from the cancellation used in the uncoded MMSE-SIC detection. In the uncoded receiver, the cancelled signal is obtained directly from the detector output at the current detection stage. In the coded IDD receiver, the users $1,\ldots,i-1$ have already passed through the FEC decoder in the current SIC pass, so their decoder outputs provide more reliable soft estimates for cancellation. However, the cancellation is still not perfect. The residual uncertainty of the decoder-aided cancellation is represented by the cancellation residual variance $v_c^{\mathrm{can}}$. Its detailed calculation is given in Section~\ref{sec:LLR calculation and soft estimate}.
+
+Similar to the uncoded MMSE-SIC procedure, the downsized channel matrix and the downsized variance matrix are used after each stage. The filter output for user $i$ is
+\begin{equation}
+    z^{(t)}_{i}
+    =
+    \tilde{\bm{w}}^H_i
+    \bm{y}_{(i)}^{(t)},
+\end{equation}
+with equivalent scalar gain
+\begin{equation}
+    a^{(t)}_{i}
+    =
+    \tilde{\bm{w}}^H_i\bm{h}_i .
+\end{equation}
+The effective variance of the residual interference and noise is
+\begin{equation}
+    \sigma_{i,\mathrm{eff}}^{2~(t)}
+    =
+    \sum_{j>i}
+    \bar{v}_j^{(t)}
+    \abs{\tilde{\bm{w}}^H_i\bm{h}_j}^2
+    +
+    \sum_{c<i}
+    v_c^{\mathrm{can}}
+    \abs{\tilde{\bm{w}}^H_i\bm{h}_c}^2
+    +
+    2\sigma^2\norm{\tilde{\bm{w}}^H_i}^2 .
+    \label{eq:idd-eff-var}
+\end{equation}
+The first term in \eqref{eq:idd-eff-var} comes from undecoded users whose interference is represented by the a priori variance $\bar{v}_j^{(t)}$. The second term is the cancellation residual caused by the already decoded users. The last term is the filtered noise variance. Therefore, unlike the uncoded MMSE-SIC detection, the coded receiver explicitly accounts for the residual uncertainty of decoder-aided cancellation.
+Under the scalar approximation,
+\begin{equation}
+    z^{(t)}_{i}
+    =
+    a^{(t)}_{i}x_i
+    +
+    \eta^{(t)}_{i},
+    \qquad
+    \eta^{(t)}_{i}
+    \sim
+    \CN(0,\sigma_{i,\mathrm{eff}}^{2~(t)}).
+\end{equation}
+
+\subsection{LLR calculation and soft estimate}
+ \label{sec:LLR calculation and soft estimate}
+For the $q$th bit of user $i$, define
+\begin{equation}
+    \mathcal{S}_{i,q,b}
+    =
+    \{s\in\mathcal{S}_i:b_{i,q}(s)=b\},
+    \qquad b\in\{0,1\}.
+\end{equation}
+After MMSE filtering and decoder-aided cancellation, the detector observes the scalar equivalent channel in \eqref{eq:idd-eff-var}. The detector LLR is therefore computed from $z_i^{(t)}$, the scalar gain $a_i^{(t)}$, and the effective variance $\sigma_{i,\mathrm{eff}}^{2~(t)}$. The symbol probability induced by the a priori LLRs in the $t$th a priori update is
+\begin{equation}
+    P^{a,(t)}_{i}(x)
+    =
+    \prod_{m=0}^{M_i-1}
+    P^{a,(t)}\left(b_{i,m}=b_{i,m}(x)\right),
+    \qquad x\in\mathcal{S}_i,
+    \label{eq:idd-symbol-prior}
+\end{equation}
+where the bit probabilities are obtained from $L^{a,(t)}_{i,\ell,m}$ by the LLR-to-probability rule in \eqref{eq:bit-prior-from-llr}. The subscript $\ell$ is omitted in the following scalar detection equations for compactness.
+The detector produces an extrinsic LLR by using the a priori information of the other bits in the same modulation symbol, but not the a priori information of the target bit itself:
+\begin{equation}
+    L^{e}_{c_{i,q}}
+    =
+    \log
+    \frac{
+    \sum\limits_{x\in\mathcal{S}_{i,q,0}}
+    \exp\left(
+    -\frac{\abs{z^{(t)}_{i}-a^{(t)}_{i} x}^2}
+    {\sigma_{i,\mathrm{eff}}^{2~(t)}}
+    +
+    \sum\limits_{\substack{m=0\\m\ne q}}^{M_i-1}
+    \log P^{a,(t)}(b_{i,m}=b_{i,m}(x))
+    \right)}
+    {\sum\limits_{x\in\mathcal{S}_{i,q,1}}
+    \exp\left(
+    -\frac{\abs{z^{(t)}_{i}-a^{(t)}_{i} x}^2}
+    {\sigma_{i,\mathrm{eff}}^{2~(t)}}
+    +
+    \sum\limits_{\substack{m=0\\m\ne q}}^{M_i-1}
+    \log P^{a,(t)}(b_{i,m}=b_{i,m}(x))
+    \right)} .
+    \label{eq:idd-demapper-extrinsic-llr}
+\end{equation}
+The detector LLR passed to the FEC decoder is obtained by adding the target-bit a priori LLR:
+\begin{equation}
+    L_{c_{i,q}}
+    =
+    \alpha L^{e}_{c_{i,q}}
+    +
+    L^{a,(t)}_{i,\ell,q},
+    \label{eq:decoder-input-llr}
+\end{equation}
+where $\alpha\leq 1$ is an optional damping factor. The undamped case uses $\alpha=1$, while the implementation used in the simulations may choose a smaller value to avoid overconfident detector feedback.
+
+For BPSK modulation, \eqref{eq:idd-demapper-extrinsic-llr} reduces to the scalar LLR expression
+\begin{equation}
+    L_{c_i}
+    =
+    \frac{4\Re\{(a_i^{(t)})^*z_i^{(t)}\}}
+    {\sigma_{i,\mathrm{eff}}^{2~(t)}}.
+    \label{eq:idd-bpsk-llr}
+\end{equation}
+
+The FEC decoder produces posterior LLRs $\bm{L}^{d}_{\bm{c}_i}$. These posterior LLRs are used to form the decoder-aided soft estimate for SIC cancellation. For the general bit-labeled modulation case, define the decoder posterior symbol probability as
+\begin{equation}
+    P^{d}_{i}(x)
+    =
+    \prod_{m=0}^{M_i-1}
+    P^{d}(b_{i,m}=b_{i,m}(x)),
+    \qquad x\in\mathcal{S}_i,
+\end{equation}
+where the bit probabilities are obtained from the decoder posterior LLRs using the same LLR-to-probability rule as in \eqref{eq:bit-prior-from-llr}. The decoder-aided posterior soft estimate is
+\begin{equation}
+    \hat{s}^{d}_{i}
+    =
+    \E[x_i\mid \bm{L}^{d}_{\bm{c}_i}]
+    =
+    \frac{
+    \sum\limits_{x\in\mathcal{S}_i}
+    x P^{d}_{i}(x)}
+    {\sum\limits_{x\in\mathcal{S}_i}
+    P^{d}_{i}(x)} ,
+    \label{eq:decoder-posterior-soft-estimate}
+\end{equation}
+with residual variance
+\begin{equation}
+    v_i^{\mathrm{can}}
+    =
+    \frac{
+    \sum\limits_{x\in\mathcal{S}_i}
+    \abs{x}^2 P^{d}_{i}(x)}
+    {\sum\limits_{x\in\mathcal{S}_i}
+    P^{d}_{i}(x)}
+    -
+    \abs{\hat{s}^{d}_{i}}^2 .
+    \label{eq:decoder-posterior-soft-var}
+\end{equation}
+For BPSK modulation, the decoder posterior LLR gives
+\begin{equation}
+    L^d_{c_i}
+    =
+    \operatorname{decoder}(L_{c_i}),
+    \qquad
+    \hat{s}^{d}_{i}
+    =
+    \tanh\left(\frac{L^d_{c_i}}{2}\right),
+    \qquad
+    v_i^{\mathrm{can}}
+    =
+    1-\left(\hat{s}^{d}_{i}\right)^2 .
+    \label{eq:bpsk-decoder-soft-estimate}
+\end{equation}
+The quantity $v_i^{\mathrm{can}}$ is the cancellation residual variance used in \eqref{eq:idd-eff-var}. It measures the remaining uncertainty after subtracting the decoder-aided soft estimate $\hat{s}^d_i$ from the received vector. A more reliable decoder output gives a smaller $v_i^{\mathrm{can}}$, which reduces the residual interference term in the following SIC stages.
+
+After all users are processed, the detector a priori LLRs for the next a priori update are obtained from decoder extrinsic information:
+\begin{equation}
+    L^{a,(t+1)}_{i,\ell,q}
+    =
+    L^{d}_{c_{i,q}}
+    -
+    L_{c_{i,q}}.
+    \label{eq:decoder-extrinsic-feedback}
+\end{equation}
+Equivalently, in vector form, $\bm{L}^{e}_{\bm{c}_i}=\bm{L}^{d}_{\bm{c}_i}-\bm{L}_{\bm{c}_i}$. The collection of all users' extrinsic information is fed back to the detector as the a priori information for the next update. This a priori update is performed after all users have been decoded.
+
+\subsection{Algorithm Summary}
+
+\begin{algorithm}[t]
+\caption{MMSE-SIC-IDD receiver for one coded block}
+\label{alg:mmse-sic-idd}
+\begin{algorithmic}[1]
+\STATE Initialize the a priori LLRs $L^{a,(0)}_{i,\ell,m}=0$ for all users, coded-symbol positions, and bit positions.
+\FOR{$t=0,1,\ldots,t_{\max}-1$}
+    \STATE Compute $\mu^{(t)}_{i,\ell}$ and $\sigma^{2~(t)}_{i,\ell}$ for all users.
+    \STATE Form the variance matrix $\bm{V}$ from the block-averaged variances.
+    \STATE Determine the SIC order using post-SINR ordering and re-number the users as $1,\ldots,U$.
+    \FOR{$i=1,2,\ldots,U$}
+        \STATE Compute the variance-aware MMSE filter in \eqref{eq:variance-aware-mmse}.
+        \STATE Build $\bm{y}^{(t)}_{(i)}$ using \eqref{eq:idd-stage-one-residual} or \eqref{eq:idd-stage-i-residual}.
+        \STATE Generate detector extrinsic LLRs using \eqref{eq:idd-demapper-extrinsic-llr}.
+        \STATE Decode user $i$ and obtain $\hat{s}^{d}_{i}$ and $v_i^{\mathrm{can}}$.
+    \ENDFOR
+    \STATE Set the next a priori LLRs using \eqref{eq:decoder-extrinsic-feedback}.
+\ENDFOR
+\STATE Make hard decisions from the final decoder outputs.
+\end{algorithmic}
+\end{algorithm}
+
+\section{MMSE-PIC-IDD}
+
+Parallel interference cancellation (PIC) cancels all other users in parallel instead of successively decoding one user at a time \cite{studer2011siso}. For user $k$, the residual vector is
+\begin{equation}
+    \bm{y}^{(t)}_{k,\ell}
+    =
+    \bm{y}_\ell
+    -
+    \sum_{j\ne k}\bm{h}_j\mu^{(t)}_{j,\ell}.
+    \label{eq:pic-residual}
+\end{equation}
+The variance-aware MMSE filter follows the same form as \eqref{eq:variance-aware-mmse}, and the LLR calculation follows the MMSE-SIC procedure. PIC avoids SIC ordering and reduces decoding latency because users can be processed in parallel. However, PIC relies directly on the a priori-based soft means of all interfering users, so the quality of the a priori update is especially important. SIC, in contrast, performs ordered stage-by-stage cancellation and can additionally use decoded-user feedback from earlier stages in the same pass. This difference makes PIC and SIC complementary references: PIC represents a more parallel receiver whose cancellation quality is dominated by a priori reliability, whereas SIC represents a sequential receiver that can exploit current decoder outputs at the cost of ordering dependence and longer latency.
+
+\section{MAP-IDD}
+
+MAP-IDD provides a coded joint-detection baseline. For user a priori LLRs $L_{a,k,\ell}$, the MAP detector evaluates each candidate vector $\bm{x}^{(q)}\in\{\pm1\}^U$ using
+\begin{equation}
+    \Lambda_q
+    =
+    -\frac{\norm{\bm{y}_\ell-\bm{H}\bm{x}^{(q)}}^2}{N_0}
+    +
+    \frac{1}{2}\sum_{k=1}^{U}x_k^{(q)}L_{a,k,\ell}.
+    \label{eq:map-idd-metric}
+\end{equation}
+The LLR of user $k$ is
+\begin{equation}
+    L_{k,\ell}
+    =
+    \log
+    \frac{\sum_{q:x_k^{(q)}=+1}\exp(\Lambda_q)}
+    {\sum_{q:x_k^{(q)}=-1}\exp(\Lambda_q)} .
+    \label{eq:map-idd-llr}
+\end{equation}
+This receiver provides strong BLER performance but retains exponential complexity in $U$. It is therefore useful as a benchmark for coded MMSE-SIC-IDD and MMSE-PIC-IDD.
+
+\section{Coded Simulation Results}
+
+The coded simulations use BPSK modulation, Rayleigh block fading, and a $(1008,504)$ LDPC code. The receiver candidates include HDS-MAP, MMSE-SIC-IDD with post-SINR ordering, and MMSE-PIC-IDD. Equal large-scale fading $(\beta_1,\ldots,\beta_U)=(1,\ldots,1)$ and equal transmit power $P_1=\cdots=P_U=1$ are used in the coded multiuser comparisons.
+
+\figplaceholder{figures/coded_bler_three_users.pdf}{BLER comparison of HDS-MAP, MMSE-SIC-IDD, and MMSE-PIC-IDD for a coded three-user system with a $(1008,504)$ LDPC code.}{fig:coded-bler-three-users}
+
+\figplaceholder{figures/coded_bler_four_users.pdf}{BLER comparison of HDS-MAP, MMSE-SIC-IDD, and MMSE-PIC-IDD for a coded four-user system with a $(1008,504)$ LDPC code.}{fig:coded-bler-four-users}
+
+\figplaceholder{figures/coded_bler_six_users.pdf}{BLER comparison of HDS-MAP, MMSE-SIC-IDD, and MMSE-PIC-IDD for a coded six-user system with a $(1008,504)$ LDPC code.}{fig:coded-bler-six-users}
+
+The coded results show a different trend from uncoded BER. Although MAP-based detection remains a strong benchmark, MMSE-SIC-IDD becomes much more competitive after channel coding is introduced. Decoder-aided soft cancellation reduces the impact of early SIC errors, and variance-aware filtering prevents the receiver from treating uncertain decisions as perfectly known. This is the key distinction between uncoded SIC and coded SIC-IDD: in the uncoded case, cancellation quality is determined primarily by the detector output at the current SNR, while in the coded case the decoder can use code constraints across the whole block to refine the reliability of the cancellation signal.
+
+For three- and four-user cases, MMSE-SIC-IDD can approach MAP-IDD even with a small number of a priori update iterations. This improvement mainly comes from the inner SIC pass, where decoder outputs of previously detected users are used as soft cancellation terms for the following SIC stages. MAP-IDD still provides favorable BLER performance because it evaluates the coded multiuser likelihood jointly. As the number of users increases, however, MMSE-SIC-IDD becomes more restricted because the residual interference level increases and the ordering problem becomes more difficult. Nevertheless, the coded low-complexity receivers remain attractive because MAP-IDD requires enumeration of all multiuser candidates and therefore becomes rapidly more expensive as $U$ grows.
+
+The coded comparison also shows that for a three-user two-resource coded system, coded MMSE-SIC-IDD can perform close to coded HDS-CDMA with MAP-based detection in the unequal-large-scale-fading case. In the equal-large-scale-fading case, coded HDS-CDMA remains slightly better in the high-SNR region because the joint detector still makes fuller use of the multiuser likelihood. The gain from increasing the number of a priori update iterations is limited under block fading because all coded symbols experience the same channel realization, limiting the amount of independent reliability diversity available to the iterative receiver. This observation suggests that the value of additional IDD iterations depends not only on the code but also on the channel variation across the coded block.
+
+\section{Receiver Tradeoffs}
+
+Table~\ref{tab:receiver-tradeoff} summarizes the main receiver tradeoffs.
+
+\begin{table}[t]
+\centering
+\caption{Qualitative comparison of uplink NOMA receiver families.}
+\label{tab:receiver-tradeoff}
+\begin{tabular}{p{0.24\linewidth}p{0.24\linewidth}p{0.24\linewidth}p{0.20\linewidth}}
+\toprule
+Feature & GDMA/HDS-CDMA & PD-NOMA soft SIC & Multi-resource PD-NOMA MMSE-SIC \\
+\midrule
+User separation & Complex channel gain and/or signature; magnitude and phase & Received-power difference; mainly magnitude & Resource-domain channel vectors; magnitude and phase through filtering \\
+Detector type & Joint ML/MAP & Successive cancellation & Linear MMSE filtering plus SIC \\
+Complexity & Exponential in number of users & Approximately linear in number of users & Approximately linear to polynomial, depending on matrix inversion size \\
+Uncoded BER & Best among compared schemes & Sensitive to error propagation & Intermediate; improved by multiple resources \\
+Coded BLER & Strong benchmark & Improved by decoder feedback if IDD is used & Competitive with IDD and variance-aware filtering \\
+Latency & Higher due to joint enumeration & Low, but sequential & Low to medium; SIC is sequential, PIC can be parallel \\
+System loading & Higher loading possible at higher complexity & Lower loading unless power disparity is strong & Medium loading with lower complexity than MAP \\
+\bottomrule
+\end{tabular}
+\end{table}

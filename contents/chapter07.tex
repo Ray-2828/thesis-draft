@@ -1,0 +1,25 @@
+\chapter{Conclusion and Future Work}\label{ch:conclusion}
+
+This chapter summarizes the main results of this thesis and discusses possible future work. The conclusions are organized around the receiver-side factors studied in the previous chapters, including channel information, decoder reliability, frequency-domain diversity, and synchronization conditions in uplink NOMA systems.
+
+\section{Conclusion}
+
+This thesis draft compared uplink NOMA receivers from uncoded single-resource systems to coded multi-resource and OFDM systems. In the single-resource case, GDMA outperforms PD-NOMA with soft SIC because GDMA jointly exploits complex channel gains, while SIC depends heavily on received-power ordering and suffers from error propagation. Increasing the large-scale fading disparity helps SIC, but it also creates user-fairness concerns.
+
+In the uncoded multi-resource case, MMSE-SIC improves PD-NOMA by using vector observations across resources. Post-SINR ordering is more effective than amplitude-based ordering because it reflects post-filtering interference and noise enhancement. Nevertheless, HDS-CDMA with ML detection still achieves better BER because it performs joint multiuser detection.
+
+In coded systems, MMSE-SIC-IDD becomes much more competitive. Decoder-aided soft cancellation reduces SIC error propagation, and variance-aware MMSE filtering uses decoder reliability to avoid overconfident cancellation. MMSE-PIC-IDD and MAP-IDD provide useful comparisons: PIC reduces sequential latency, while MAP offers a high-performance but high-complexity benchmark. The coded results show that receiver architecture and channel coding should be considered jointly rather than separately, because decoder feedback changes the quality of the cancellation signal.
+
+For coded OFDM NOMA, channel selectivity, detection ordering, and the choice between SIC and PIC all affect BLER. The OFDM extension shows that the same MMSE-SIC-IDD principle can be applied to frequency-domain observations, but coded-block ordering and subcarrier reliability become additional design issues. In asynchronous OFDM NOMA, timing offsets within the CP introduce effective channel phase rotations and possible additional interference; under some settings, MMSE-SIC shows stronger robustness than expected from synchronous comparisons. Overall, the thesis suggests that low-complexity SIC-based receivers can be made competitive when they are supported by multiple resources, soft information, variance-aware filtering, and receiver designs that reflect the actual uplink impairment model.
+
+\section{Future Work}
+
+Several research directions remain open:
+\begin{itemize}
+    \item Extend the simulation study to more users, more resources, and higher-order modulation such as QPSK or 16-QAM.
+    \item Study fast-fading coded blocks, where a priori update iterations may provide larger gains than in block-fading channels.
+    \item Develop lower-complexity approximations to MAP-IDD for HDS-CDMA and compare them with MMSE-SIC-IDD under the same latency constraints.
+    \item Analyze imperfect CSI more deeply, including its effect on SIC ordering, cancellation accuracy, and variance-aware filtering.
+    \item Optimize user pairing and resource assignment to balance SIC performance and user fairness.
+    \item Extend the asynchronous OFDM study to random access scenarios with unknown timing offsets and blind or semi-blind timing estimation.
+\end{itemize}

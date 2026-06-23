@@ -1,0 +1,73 @@
+\chapter{Asynchronous OFDM NOMA}\label{ch:async}
+
+This chapter studies asynchronous uplink OFDM NOMA, where different users may arrive at the BS with different timing offsets. Although a timing offset within the cyclic prefix can be represented as a subcarrier-dependent phase rotation, the multiuser detector observes different effective channel responses for different users. This chapter examines how timing offsets, MAI/ISI approximations, and detection ordering affect the robustness of MAP and MMSE-SIC receivers.
+
+\section{Motivation}
+
+The previous chapters assume perfect symbol-level synchronization among users. In practical uplink random access, users may arrive at the BS with different timing offsets because of propagation delay, oscillator mismatch, or limited timing-advance precision \cite{lin2023aloha,haci2017async}. If the timing drift is within the cyclic prefix, OFDM orthogonality can be largely preserved for a single user, and the drift appears as a subcarrier-dependent phase rotation in the frequency domain. For multiuser NOMA, however, different users may have different timing offsets, which changes their effective channel coefficients and may introduce multiple-access interference (MAI) or inter-symbol interference (ISI) depending on the receiver alignment.
+
+\figplaceholder{figures/asynchronous_system_model.pdf}{Asynchronous uplink OFDM NOMA model. Timing offsets within the cyclic prefix appear as user-dependent phase rotations across subcarriers.}{fig:async-system-model}
+
+\section{Timing Offset Model}
+
+Let $\tau_k$ denote the timing offset of user $k$ relative to the receiver timing reference. If $\tau_k$ is within the CP tolerance, the frequency-domain effective channel on subcarrier $q$ can be written as
+\begin{equation}
+    \tilde{H}_{k,q}
+    =
+    H_{k,q}e^{-j2\pi q\tau_k/N_{\mathrm{FFT}}}.
+    \label{eq:async-phase-rotation}
+\end{equation}
+The received signal becomes
+\begin{equation}
+    y_q
+    =
+    \sum_{k=1}^{U}\tilde{H}_{k,q}x_{k,q}
+    +
+    \eta_q,
+    \label{eq:async-received}
+\end{equation}
+where $\eta_q$ includes AWGN and possible residual interference terms caused by imperfect alignment. If the receiver is aligned to user $1$, the BLER of user $1$ can be evaluated under different offsets of the other users.
+
+The presentation materials consider system labels such as $(2,3,0,3)$ and $(2,4,0,4)$, which can be interpreted as two resources, three or four users, and timing offsets selected over a specified range. This notation is convenient for comparing how loading and timing spread affect the receiver. It also emphasizes that asynchronous behavior should not be treated only as a synchronization impairment; it changes the effective channel geometry and may therefore alter the relative advantage of joint detection and linear SIC detection.
+
+\section{MAI and ISI Variance Approximation}
+
+When timing offsets or excess delays cause part of a multipath component to fall outside the useful FFT window, residual ISI can be approximated as additional noise. Let $\Delta_\ell$ denote the excess delay of tap $\ell$ beyond the receiver-aligned useful interval. For an exponentially decayed $L_h$-tap channel, the normalized tap power is given by \eqref{eq:exp-decay-profile}. An approximate ISI power ratio for user $k$ can be written as
+\begin{equation}
+    \alpha^{\mathrm{ISI}}_k
+    =
+    \sum_{\ell\in\mathcal{L}_{\mathrm{out}}}
+    \rho_\ell,
+    \label{eq:isi-ratio}
+\end{equation}
+where $\mathcal{L}_{\mathrm{out}}$ is the set of taps whose delayed energy is outside the useful window. If the ISI component is modeled as additional Gaussian noise, the effective SINR is approximated by
+\begin{equation}
+    \Gamma^{\mathrm{eff}}_k
+    =
+    \frac{P_k\abs{\tilde{H}_{k,q}}^2}
+    {N_0+\sigma^2_{\mathrm{MAI}}+\sigma^2_{\mathrm{ISI},k}}.
+    \label{eq:async-effective-sinr}
+\end{equation}
+This approximation is especially useful for APP or MAP-style detectors, where the additional interference variance can be included in the likelihood metric. It is also useful for interpreting MMSE-SIC results, because additional MAI/ISI variance reduces the reliability of both ordering and cancellation. When the additional interference dominates, the difference between refined post-SINR ordering and simpler amplitude-based ordering may become less visible.
+
+\figplaceholder{figures/asynchronous_mai_variance.pdf}{MAI/ISI variance approximation for asynchronous OFDM NOMA. Timing offsets within or near the CP modify the effective channel and can be modeled as additional interference variance.}{fig:async-mai}
+
+\section{Asynchronous Simulation Results}
+
+The asynchronous simulations evaluate BLER under single-resource and two-resource settings. The receiver may be aligned to user $1$ to observe the BLER of that user. Multi-resource systems such as $(2,3,0,3)$ and $(2,4,0,4)$ are considered to compare MAP detection and MMSE-SIC under different timing-offset ranges.
+
+\figplaceholder{figures/async_single_resource_bler.pdf}{Asynchronous single-resource BLER result with the receiver aligned to user $1$.}{fig:async-single}
+
+\figplaceholder{figures/async_2303_case_a.pdf}{Asynchronous BLER result for the $(2,3,0,3)$ system, case A.}{fig:async-2303-a}
+
+\figplaceholder{figures/async_2303_case_b.pdf}{Asynchronous BLER result for the $(2,3,0,3)$ system, case B.}{fig:async-2303-b}
+
+\figplaceholder{figures/async_2303_case_c.pdf}{Asynchronous BLER result for the $(2,3,0,3)$ system, case C.}{fig:async-2303-c}
+
+\figplaceholder{figures/async_2404_case_a.pdf}{Asynchronous BLER result for the $(2,4,0,4)$ system, case A.}{fig:async-2404-a}
+
+\figplaceholder{figures/async_2404_case_b.pdf}{Asynchronous BLER result for the $(2,4,0,4)$ system, case B.}{fig:async-2404-b}
+
+The main conclusion from the asynchronous study is that MMSE-SIC can be slightly better than MAP detection in some two-resource three-user or four-user asynchronous settings. This is notable because in the corresponding synchronous four-user system, MAP detection can significantly outperform MMSE-SIC. The contrast suggests that asynchronous phase rotations and MAI change the effective separability of the users. A receiver that is optimal for the ideal synchronous likelihood is not necessarily the most robust option when the practical impairment model changes the effective observation statistics.
+
+MMSE-SIC, which relies on linear filtering and successive cancellation over the effective channel, can exploit part of this variation and may be more robust to certain asynchronous conditions. The BLER of post-SINR ordering and amplitude-based ordering becomes nearly identical in some asynchronous cases, particularly when MAI is present and dominates the ordering difference. This result does not imply that ordering is unimportant in general; rather, it indicates that the benefit of a refined ordering metric depends on whether the receiver is limited mainly by multiuser separability or by additional asynchronous interference. The asynchronous results therefore broaden the thesis comparison from idealized detector performance to receiver robustness under a more realistic uplink impairment.

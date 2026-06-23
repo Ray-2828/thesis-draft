@@ -1,0 +1,169 @@
+\chapter{Single-Resource Uplink Systems}\label{ch:single-resource}
+
+This chapter studies the scalar uplink NOMA model in which all users share one resource. GDMA is reviewed as a joint-detection approach that exploits complex channel gains, while PD-NOMA with soft SIC is considered as a low-complexity receiver that mainly relies on received-power ordering. This comparison establishes the baseline performance gap and identifies the SIC error-propagation issue that motivates the later multi-resource and coded receiver designs.
+
+\section{System Model}
+
+Consider an uplink system with $U$ users transmitting simultaneously over one shared resource. The resource may be a frequency band, time slot, signature, or subcarrier. The received signal at the BS is
+\begin{equation}
+    \label{eq:single_resource_system_model}
+    y = \sum_{k=1}^{U} \sqrt{P_k \beta_k} h_k x_k + n,
+\end{equation}
+where $P_k$ is the transmit power of user $k$, $\beta_k$ is the large-scale fading coefficient, $h_k$ is the small-scale Rayleigh flat-fading coefficient, $x_k$ is the transmitted symbol, $g_k=\sqrt{P_k\beta_k}h_k$ is the effective channel coefficient, and $n\sim\CN(0,N_0)$ is complex AWGN. The noise variance per real dimension is denoted by $\sigma^2=N_0/2$. Unless otherwise stated, $P_k=1$ is assumed.
+For BPSK modulation, $x_k\in\{+1,-1\}$. Perfect channel state information at the receiver (CSIR) is assumed in the baseline comparisons. The performance metric for uncoded transmission is bit error rate (BER), and $E_b/N_0$ denotes the average transmit energy per information bit per user.
+
+\figplaceholder{figures/single_resource_system_model.pdf}{Single-resource uplink NOMA system model with $U$ users sharing one resource.}{fig:single-resource-model}
+
+\section{GDMA Detection}
+
+GDMA separates users by their complex channel gains. Unlike PD-NOMA, which relies mainly on received-power differences, GDMA uses both the magnitude and phase of $g_k$. Therefore, even when two users have comparable received powers, their superimposed signal points may remain distinguishable if the complex channel coefficients produce sufficiently separated constellation levels. This property makes GDMA an appropriate high-performance reference for the scalar system, although it also introduces a complexity cost because the detector must evaluate the possible multiuser symbol combinations. For BPSK, all possible multiuser symbol combinations form
+\begin{equation}
+    \mathcal{X}=\{\bm{x}^{(0)},\bm{x}^{(1)},\ldots,\bm{x}^{(2^U-1)}\},
+\end{equation}
+where $\bm{x}^{(\ell)}=[x_1^{(\ell)},\ldots,x_U^{(\ell)}]^T$ and $x_k^{(\ell)}\in\{+1,-1\}$. The corresponding superimposed signal levels are
+\begin{equation}
+  \begin{split}
+    s_\ell &= (-1)^{l_2[1]} \cdot \sqrt{\beta_1}h_1 + (-1)^{l_2[2]} \cdot \sqrt{\beta_2}h_2 + \cdots + (-1)^{l_2[U]} \cdot \sqrt{\beta_U}h_U \\
+    &= \sum_{k=1}^{U} (-1)^{l_2[k]} \cdot \sqrt{\beta_k}h_k, \quad \ell=0,1,\ldots,2^U-1
+  \end{split}
+\end{equation}
+For $m$ coded bits per modulation symbol, the number of levels is $L=2^{mU}$; for BPSK, $m=1$.
+
+For the special case of $U=2$ and BPSK, the mapping from coded bits $c_k$ to BPSK symbols $x_k$ and the resulting superimposed signal levels $s_{\ell}$ is shown in Table~\ref{tab:superimposed-signal-m1-u2}. Here we use the standard BPSK mapping $x_k = 1-2c_k$ for $c_k\in\{0,1\}$.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Mapping between coded bits, BPSK symbols, and superimposed signal levels for $m=1$ and $U=2$.}
+  \label{tab:superimposed-signal-m1-u2}
+  \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    $\ell$ & $c_1$ & $c_2$ & $x_1$ & $x_2$ & $s_\ell$ \\ \hline
+    0 & 0 & 0 & +1 & +1 & $\sqrt{\beta_1}h_1 + \sqrt{\beta_2}h_2$ \\ \hline
+    1 & 0 & 1 & +1 & -1 & $\sqrt{\beta_1}h_1 - \sqrt{\beta_2}h_2$ \\ \hline
+    2 & 1 & 0 & -1 & +1 & $-\sqrt{\beta_1}h_1 + \sqrt{\beta_2}h_2$ \\ \hline
+    3 & 1 & 1 & -1 & -1 & $-\sqrt{\beta_1}h_1 - \sqrt{\beta_2}h_2$ \\ \hline
+  \end{tabular}
+\end{table}
+
+Given the received signal $y$, the APP of each possible superimposed level is
+\begin{equation}
+    P(s_\ell|y) =
+    \frac{\exp\left(-\frac{\abs{y-s_\ell}^2}{N_0}\right)}
+    {\sum_{\ell'}\exp\left(-\frac{\abs{y-s_{\ell'}}^2}{N_0}\right)} .
+\end{equation}
+The LLR of user $k$ is then obtained by marginalizing over all symbol combinations in which $x_k=+1$ or $x_k=-1$:
+\begin{equation}
+    L_k
+    =\log
+    \frac{
+    \sum_{\ell:x_k^{(\ell)}=+1}
+    \exp\left(-\frac{\abs{y-s_\ell}^2}{N_0}\right)}
+    {\sum_{\ell:x_k^{(\ell)}=-1}
+    \exp\left(-\frac{\abs{y-s_\ell}^2}{N_0}\right)} .
+    \label{eq:gdma-llr}
+\end{equation}
+The detected bit is decided according to the sign of $L_k$.
+
+\figplaceholder{figures/gdma_bpsk_mapping.pdf}{Example of the GDMA BPSK mapping table for two users. Each row represents one candidate multiuser symbol vector and its corresponding superimposed signal level.}{fig:gdma-bpsk-mapping}
+
+\figplaceholder{figures/gdma_detector_flow.pdf}{GDMA detection flow: enumerate superimposed signal levels, compute APPs, marginalize APPs into user LLRs, and make hard decisions.}{fig:gdma-flow}
+
+\subsection{Complexity of GDMA}
+
+GDMA joint detection has exponential complexity in the number of users because $2^{mU}$ candidate symbol vectors must be evaluated. This cost is acceptable for small $U$, but it becomes challenging in dense random-access scenarios. The advantage is that GDMA does not discard the phase information of the channel gains and can distinguish users even when their received powers are similar, provided that their complex channel coefficients create separable superimposed levels.
+
+\section{PD-NOMA with Soft SIC}
+
+PD-NOMA separates users mainly by received-power difference. In the uplink, the BS usually detects and cancels the strongest received signal first, then repeats the same operation on the residual signal. This principle is attractive because the receiver complexity grows much more slowly than exhaustive joint detection. However, the same sequential structure also creates the main weakness of SIC: if an early decision or soft estimate is unreliable, the cancellation residue becomes structured interference for later users. The instantaneous received-power metric of user $k$ is
+\begin{equation}
+    \gamma_k = P_k\beta_k\abs{h_k}^2 = \abs{g_k}^2 .
+    \label{eq:received-power}
+\end{equation}
+The SIC order is denoted by
+\begin{equation}
+    \pi=\{\pi(1),\pi(2),\ldots,\pi(U)\},
+\end{equation}
+where $\pi(i)$ is the user detected at stage $i$. A common ordering rule is to detect the user with the highest received power first. After ordering, the user indexes can be renumbered so that user $1$ is detected first, user $2$ second, and so on.
+
+At SIC stage $i$, the residual signal is denoted by $y^{(i)}$, with $y^{(1)}=y$. The detector approximates the remaining undetected users as Gaussian interference and computes the LLR of user $i$. An equivalent scalar observation can be written as
+\begin{equation}
+    y^{(i)} = g_i x_i + \eta_i ,
+\end{equation}
+where $\eta_i$ includes AWGN, undetected-user interference, and residual cancellation errors. If $\eta_i$ is approximated as circularly symmetric complex Gaussian with variance $\sigma^2_{\mathrm{eff},i}$, then for a general modulation alphabet $\mathcal{S}$, the LLR of the $q$th bit can be approximated by
+\begin{equation}
+    L_{i,q}
+    \approx
+    \log
+    \frac{
+    \sum\limits_{s\in\mathcal{S}_{q,+}}
+    \exp\left(-\frac{\abs{y^{(i)}-g_i s}^2}{\sigma^2_{\mathrm{eff},i}}\right)}
+    {\sum\limits_{s\in\mathcal{S}_{q,-}}
+    \exp\left(-\frac{\abs{y^{(i)}-g_i s}^2}{\sigma^2_{\mathrm{eff},i}}\right)},
+    \label{eq:soft-sic-llr}
+\end{equation}
+where $\mathcal{S}_{q,+}$ and $\mathcal{S}_{q,-}$ denote the subsets of constellation symbols whose $q$th bit is mapped to $+1$ and $-1$, respectively. The corresponding soft estimate follows the posterior-mean interpretation used in interference-cancellation receivers \cite{shapiro2005soft}:
+\begin{equation}
+    \hat{s}_i
+    =
+    \E[x_i|y^{(i)}]
+    \approx
+    \frac{
+    \sum\limits_{s\in\mathcal{S}} s
+    \exp\left(-\frac{\abs{y^{(i)}-g_i s}^2}{\sigma^2_{\mathrm{eff},i}}\right)}
+    {
+    \sum\limits_{s\in\mathcal{S}}
+    \exp\left(-\frac{\abs{y^{(i)}-g_i s}^2}{\sigma^2_{\mathrm{eff},i}}\right)},
+    \label{eq:soft-estimate}
+\end{equation}
+and the conditional variance is
+\begin{equation}
+    \sigma^2_{\hat{s}_i}
+    =
+    \E\left[\abs{x_i-\hat{s}_i}^2|y^{(i)}\right]
+    \approx
+    \frac{
+    \sum\limits_{s\in\mathcal{S}} \abs{s-\hat{s}_i}^2
+    \exp\left(-\frac{\abs{y^{(i)}-g_i s}^2}{\sigma^2_{\mathrm{eff},i}}\right)}
+    {
+    \sum\limits_{s\in\mathcal{S}}
+    \exp\left(-\frac{\abs{y^{(i)}-g_i s}^2}{\sigma^2_{\mathrm{eff},i}}\right)}.
+    \label{eq:soft-variance}
+\end{equation}
+Since the simulations in this chapter use BPSK, $\mathcal{S}=\{+1,-1\}$, and the LLR, soft estimate, and conditional variance reduce to
+\begin{equation}
+    L_i
+    \approx
+    \frac{4\Re\{g_i^*y^{(i)}\}}{\sigma^2_{\mathrm{eff},i}},
+    \qquad
+    \hat{s}_i
+    =
+    \tanh\left(\frac{L_i}{2}\right),
+    \qquad
+    \sigma^2_{\hat{s}_i}
+    =
+    1-\tanh^2\left(\frac{L_i}{2}\right).
+\end{equation}
+The residual signal for the next stage is updated by
+\begin{equation}
+    y^{(i+1)}=y^{(i)}-g_i\hat{s}_i .
+    \label{eq:soft-sic-residual}
+\end{equation}
+This process is repeated until all users are detected.
+
+\figplaceholder{figures/pd_noma_soft_sic_flow.pdf}{Soft-SIC receiver flow for single-resource PD-NOMA. Users are detected successively according to received power, and soft symbol estimates are subtracted from the residual signal.}{fig:soft-sic-flow}
+
+\section{Simulation Results and Discussion}
+
+The single-resource simulations use BPSK modulation over independent Rayleigh flat-fading channels. Soft SIC uses instantaneous received-power ordering. The GDMA receiver performs joint detection using the APP/LLR rule in \eqref{eq:gdma-llr}. The first comparison considers two users with large-scale fading coefficients $(\beta_1,\beta_2)=(1,1)$, $(1,0.1)$, and $(1,0.01)$. The second comparison considers a three-user case with $(\beta_1,\beta_2,\beta_3)=(1,0.1,0.01)$.
+
+\figplaceholder{figures/single_resource_ber_equal.pdf}{BER comparison of GDMA and soft-SIC PD-NOMA for two users with $(\beta_1,\beta_2)=(1,1)$.}{fig:single-ber-equal}
+
+\figplaceholder{figures/single_resource_ber_unequal_01.pdf}{BER comparison of GDMA and soft-SIC PD-NOMA for two users with $(\beta_1,\beta_2)=(1,0.1)$.}{fig:single-ber-unequal-01}
+
+\figplaceholder{figures/single_resource_ber_unequal_001.pdf}{BER comparison of GDMA and soft-SIC PD-NOMA for two users with $(\beta_1,\beta_2)=(1,0.01)$.}{fig:single-ber-unequal-001}
+
+\figplaceholder{figures/single_resource_ber_three_users.pdf}{BER comparison of GDMA and soft-SIC PD-NOMA for three users with $(\beta_1,\beta_2,\beta_3)=(1,0.1,0.01)$.}{fig:single-ber-three-users}
+
+The main observation is that GDMA consistently outperforms soft SIC. This is expected because GDMA jointly evaluates all possible multiuser symbol combinations, while SIC makes local decisions and is vulnerable to error propagation. When the large-scale fading gap increases, soft SIC becomes more effective because the received-power disparity provides a clearer detection order and reduces the ambiguity of early cancellation stages. Since the received-power metric depends on both the transmit power $P_k$ and the large-scale fading coefficient $\beta_k$, power allocation can partially compensate for path-loss differences and shape the SIC ordering condition. However, relying on such disparity also introduces a fairness concern, which is consistent with the user-pairing fairness issue discussed in \cite{ding2015pairing}.
+
+The three-user result further clarifies the limitation of scalar PD-NOMA. As the number of users increases, soft SIC becomes more susceptible to error propagation because each cancellation stage depends on the reliability of the previous soft estimates. Residual cancellation errors can accumulate through the successive process and degrade the following detections. In contrast, GDMA evaluates the multiuser signal constellation as a whole and can therefore maintain favorable BER performance as the number of users increases. This performance advantage comes with an important cost: the GDMA hypothesis space grows exponentially with $U$, so the decoding complexity also increases exponentially. The conclusion of this chapter is therefore twofold. First, joint use of complex channel information is valuable for uplink NOMA detection. Second, a practical low-complexity receiver needs additional observations or additional reliability information if it is to narrow the gap to joint detection. These two points motivate the multi-resource vector model in the next chapter.

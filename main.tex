@@ -1,0 +1,79 @@
+% !TEX TS-program = xelatex
+% !BIB program = bibtex
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass[
+  twoside,
+  openright,
+  degree = master, % degree = master | doctor
+  language = english, % language = chinese | english
+  fontset = template, % fontset = default | template | system | overleaf
+  watermark = true, % watermark = true | false
+  doi = false, % doi = true | false
+]{ntuthesis}
+
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\newcommand{\CN}{\mathcal{CN}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\argmax}{\operatorname*{arg\,max}}
+\newcommand{\argmin}{\operatorname*{arg\,min}}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\figplaceholder}[3]{%
+\begin{figure}[t]
+    \centering
+    \IfFileExists{#1}{%
+        \includegraphics[width=0.88\linewidth]{#1}%
+    }{%
+        \fbox{\begin{minipage}[c][0.28\textheight][c]{0.82\linewidth}
+        \centering
+        Placeholder for figure file:\\[0.5em]\texttt{\detokenize{#1}}
+        \end{minipage}}%
+    }
+    \caption{#2}
+    \label{#3}
+\end{figure}
+}
+
+\input{ntusetup}
+
+\begin{document}
+
+% Cover and verification letter
+\makecover
+\makeverification
+
+% Acknowledgement and abstract
+\input{front/acknowledgement}
+\input{front/abstract}
+
+% Contents, list of figures, and list of tables
+\maketableofcontents
+\makelistoffigures
+\makelistoftables
+
+% Main text
+\mainmatter
+\input{contents/chapter01}
+\input{contents/chapter02}
+\input{contents/chapter03}
+\input{contents/chapter04}
+\input{contents/chapter05}
+\input{contents/chapter06}
+\input{contents/chapter07}
+
+% References
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

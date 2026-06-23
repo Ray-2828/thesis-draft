@@ -1,0 +1,530 @@
+
+--- Slide 1 ---
+On Uplink NOMA systems/detection and its applications to CQI
+Speaker: Hung Jui Fan
+Advisor: Mao-Chao Lin Ph.D.
+            Shih-Kai Lee 
+Ph.D.
+Date: 06/06
+
+
+--- Slide 2 ---
+Outline
+Introduction
+Non-Orthogonal Multiple Access(NOMA)
+Single resource system
+Gain Division Multiple Access(GDMA)
+Power-Domain NOMA(PD-NOMA)
+Multi-resource system
+Multi-resource PD NOMA
+MMSE-SIC detection
+MMSE-PIC detection
+Coded 
+multi-resource 
+system with IDD(Iterative detection and decoding)
+NOMA with OFDM system
+Asynchronous NOMA
+
+
+--- Slide 3 ---
+Introduction
+Future wireless systems require 
+ultra-high spectral efficiency
+ and the capability to support 
+massive machine-type communications (mMTC)
+ in highly dense networks.
+Multiple access (MA) techniques are essential for 
+improving spectral efficiency
+ and accommodating a massive number of simultaneous connections in wireless networks.
+Orthogonal multiple access (OMA) avoids inter-user interference(IUI) by assigning disjoint resources, its user capacity is fundamentally limited by the number of orthogonal resource units. 
+Non-orthogonal multiple access (NOMA) improves resource utilization by allowing multiple users to share the same resource.
+In uplink NOMA, the receiver structure is often the key factor that determines both reliability and practicality. Different NOMA schemes rely on different user-separation principles.
+
+
+--- Slide 4 ---
+Introduction of Multiple Access
+Multiple Access(MA)
+ refers to methods for allowing multiple users to share communication resources.
+OMA (Orthogonal Multiple Access)
+Users occupy separate orthogonal resources (time, frequency, code).
+No inter-user interference
+ →
+ Single user detector(SUD) is used.
+Lower spectral efficiency in multiple user system.
+NOMA(Non orthogonal Multiple Access)
+Users  simultaneously access the same resource.
+Have inter-user interference 
+→ 
+multiple user detector(MUD) is used.
+Higher spectral efficiency, supports more users.
+Lower transmission latency (no scheduling request from users to base station is required).
+A resource can be a frequency band, a timeslot, a signature or a subcarrier.
+
+
+--- Slide 5 ---
+Uplink single resource system
+Gain Division Multiple Access(GDMA) system: The receiver employs 
+both the magnitudes and phases 
+of channel gains associated to the users to separate users.
+Power Domain-NOMA(PD-NOMA) system: the receiver employs the 
+power levels
+ associated to users to separate users.
+
+
+--- Slide 6 ---
+Uplink single resource system model
+Assuming 
+perfect timing synchronization
+, 
+U
+ users transmit simultaneously over the same resource, where a resource can be a frequency band, a time slot, or a signature.
+Let received signal at BS is 
+ 
+     where 
+     
+In our simulation, for simplicity, 
+ is assumed unless otherwise stated.
+.
+ 
+and 
+    
+ 
+
+
+--- Slide 7 ---
+Detection 
+p
+rinciple 
+for GDMA
+According to the received signal, there are 
+L = 
+2
+mU
+  possible levels 
+for all superimposed signals  
+     
+Take 
+and BPSK modulation ( m = 1 ) as example, the mapping rules can be tabled as follow.
+ 
+l
+  c
+1
+        c
+2
+  x
+1
+        x
+2
+l
+  c
+1
+        c
+2
+  x
+1
+        x
+2
+0
+0
+0
+1
+1
+1
+0 
+1
+1
+-1
+2
+1 
+0
+-1
+1
+3
+1 
+1
+-1 
+-1
+0
+0
+0
+1
+1
+1
+0 
+1
+1
+-1
+2
+1 
+0
+-1
+1
+3
+1 
+1
+-1 
+-1
+
+
+--- Slide 8 ---
+Detection 
+p
+rinciple 
+for BPSK GDMA
+Step1. 
+Calculate superimposed signals 
+Step2. Calculate 
+a posteriori probabilities (APPs)
+Step3. Calculate the Log-Likelihood Ratio (LLR)
+	
+ 
+l
+ = 0 
+→ 
+(
+ 
+l
+2
+[1]
+ 
+l
+2
+[2]
+ 
+…
+ 
+l
+2
+[U]
+ 
+)
+ 
+=
+ 
+(0
+ 
+0
+ 
+…
+ 
+0)
+l
+ = 1 
+→ 
+(
+ 
+l
+2
+[1]
+ 
+l
+2
+[2]
+ 
+…
+ 
+l
+2
+[U]
+ 
+)
+ 
+=
+ 
+(0
+ 
+0
+ 
+…
+ 
+1)
+ 
+	
+    
+∙
+	
+    
+∙
+	
+    
+∙
+L
+ = 
+L
+-1 
+→ 
+(
+ 
+l
+2
+[1]
+ 
+l
+2
+[2]
+ 
+…
+ 
+l
+2
+[U]
+ 
+)
+ 
+=
+ 
+(1
+ 
+1
+ 
+…
+ 
+1)
+ 
+ 
+ 
+
+
+--- Slide 9 ---
+Detection 
+p
+rinciple 
+for PD NOMA : SIC
+User signals are 
+successively decoded
+.
+According to the received signal, we have
+ 
+average received power 
+     
+instantaneous received power 
+.
+STEP1.
+ The receiver starts by decoding the user with 
+higher received power
+(can be average or instantaneous) by treating the other interfering users as noise. 
+     
+STEP2.
+ Subtract it from the combined signal and then decode its own signal
+.
+ 
+
+
+--- Slide 10 ---
+Detection 
+p
+rinciple 
+for PD NOMA : soft SIC I
+Take 
+uplink 2 user and BPSK 
+as example and 
+(Simulations below follow this setting.)
+     Let received signal at BS is 
+Assume user 1 has higher instantaneous received power (perfect CSIR), that is, 
+.
+STEP1
+. Detect user 1’s soft symbol 
+ first by treating user 1 as gaussian noise.
+     
+STEP2.
+ Subtract 
+from 
+ , that is,   
+.
+     
+STEP3
+. Detect user 2’s soft symbol 
+ from 
+.
+     
+STEP4
+. hard decision from 
+ to detect every user’s hard symbol. 
+ 
+
+
+--- Slide 11 ---
+Detection 
+p
+rinciple 
+for PD NOMA : soft SIC II
+The SIC detection order is defined as
+ 
+, where 
+denotes the user index detected at the 
+ SIC stage. For simplicity, we assume the indexes of users in have been renumbering.
+At each SIC stage, the LLR of the detected user is calculated by approximating the remaining interference as Gaussian noise.
+The soft estimate of the detected user is obtained from the LLR as
+ 
+.
+The conditional variance is obtained as 
+ 
+
+
+--- Slide 12 ---
+Detection 
+p
+rinciple 
+for PD NOMA : soft SIC III
+At the 
+SIC stage, , the LLR of 
+is updated by the residual signal 
+  
+For BPSK modulation, the LLR of user 
+ 
+
+
+--- Slide 13 ---
+Simulation results (GDMA 
+v.s
+. soft SIC)
+Simulation environments
+Modulation
+BPSK 
+User
+2
+Channel
+Rayleigh
+flat fading channel
+Detector
+Soft SIC
+(instantaneous received power order)
+(
+1
+ , 1)
+Simulation environments
+Modulation
+BPSK 
+User
+2
+Channel
+Rayleigh
+flat fading channel
+Detector
+Soft SIC
+(instantaneous received power order)
+(
+1
+ , 1)
+
+
+--- Slide 14 ---
+Simulation results (GDMA 
+v.s
+. soft SIC)
+Simulation environments
+Modulation
+BPSK 
+User
+2
+Channel
+Rayleigh
+flat fading channel
+Detector
+Soft SIC
+ 
+(instantaneous received power order)
+(1,0.1)
+Simulation environments
+Modulation
+BPSK 
+User
+2
+Channel
+Rayleigh
+flat fading channel
+Detector
+Soft SIC
+ 
+(instantaneous received power order)
+(1,0.1)
+
+
+--- Slide 15 ---
+Simulation results (GDMA 
+v.s
+. soft SIC)
+Simulation environments
+Modulation
+BPSK 
+User
+2
+Channel
+Rayleigh
+flat fading channel
+Detector
+Soft SIC
+(instantaneous received power order)
+(1,0.01)
+Simulation environments
+Modulation
+BPSK 
+User
+2
+Channel
+Rayleigh
+flat fading channel
+Detector
+Soft SIC
+(instantaneous received power order)
+(1,0.01)
+
+
+--- Slide 16 ---
+Simulation results (GDMA 
+v.s
+. soft SIC)
+Simulation environments
+Modulation
+BPSK 
+User
+3
+Channel
+Rayleigh
+flat fading channel
+Detector
+Soft SIC
+(
+instantaneous 
+received power order
+)
+(1,0.1,0.01)
+Simulation environments
+Modulation
+BPSK 
+User
+3
+Channel
+Rayleigh
+flat fading channel
+Detector
+Soft SIC
+(
+instantaneous 
+received power order
+)
+(1,0.1,0.01)
+
+
+--- Slide 17 ---
+Remarks
+A
+ 
+larger large-scale fading gap 
+(greater 
+ 
+disparity) helps soft SIC approach GDMA performance
+, but introduces severe user fairness issues [1].
+In 3
+-user scenarios, GDMA still significantly outperforms soft SIC, even with a 10 dB 
+ 
+gap.
+Power 
+跟 
+beta
+的補償
+ 
+[1] 
+Ding, Zhiguo, Pingzhi Fan, and H. Vincent Poor. "Impact of user pairing on 5G nonorthogonal multiple-access downlink transmissions." 
+IEEE Transactions on Vehicular Technology
+ 65.8 (2015): 6010-6023.
