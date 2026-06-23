@@ -208,8 +208,7 @@ At SIC stage $i>1$, the detection of user $i$ benefits from the FEC outputs of u
 \end{equation}
 The first summation cancels the users that have already been decoded in the current SIC pass by using the decoder-aided soft symbol estimates $\hat{s}^{d}_{j}$. The second summation cancels the users that have not yet been decoded in the current pass by using the a priori soft symbol means $\mu^{(t)}_{j}$. This is the coded extension of the uncoded subtraction in Chapter~\ref{ch:multi-resource}.
 
-The cancellation term in \eqref{eq:idd-stage-i-residual} is different from the cancellation used in the uncoded MMSE-SIC detection. In the uncoded receiver, the cancelled signal is obtained directly from the detector output at the current detection stage. In the coded IDD receiver, the users $1,\ldots,i-1$ have already passed through the FEC decoder in the current SIC pass, so their decoder outputs provide more reliable soft estimates for cancellation. However, the cancellation is still not perfect. The residual uncertainty of the decoder-aided cancellation is represented by the cancellation residual variance $v_c^{\mathrm{can}}$. Its detailed calculation is given in Section~\ref{sec:LLR calculation and soft estimate}.
-
+The cancellation term in \eqref{eq:idd-stage-one-residual} differs from that used in the uncoded MMSE-SIC detection in Chapter~\ref{ch:multi-resource}. In the uncoded case, the cancelled signal is directly generated from the detector output at the current SIC stage, and the corresponding residual uncertainty is not explicitly incorporated into the subsequent MMSE filtering. In the coded IDD receiver, however, users $1,\ldots,i-1$ have already been decoded in the current SIC pass. Their decoder outputs provide more reliable soft symbol estimates as well as reliability information for quantifying the remaining uncertainty after cancellation. Therefore, the decoder-aided cancellation is modeled together with its residual variance $v_c^{\mathrm{can}}$, whose detailed calculation is given in Section~\ref{sec calculation and soft estimate}.
 Similar to the uncoded MMSE-SIC procedure, the downsized channel matrix and the downsized variance matrix are used after each stage. The filter output for user $i$ is
 \begin{equation}
     z^{(t)}_{i}
@@ -239,6 +238,7 @@ The effective variance of the residual interference and noise is
     \label{eq:idd-eff-var}
 \end{equation}
 The first term in \eqref{eq:idd-eff-var} comes from undecoded users whose interference is represented by the a priori variance $\bar{v}_j^{(t)}$. The second term is the cancellation residual caused by the already decoded users. The last term is the filtered noise variance. Therefore, unlike the uncoded MMSE-SIC detection, the coded receiver explicitly accounts for the residual uncertainty of decoder-aided cancellation.
+
 Under the scalar approximation,
 \begin{equation}
     z^{(t)}_{i}
