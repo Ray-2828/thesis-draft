@@ -17,28 +17,21 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces General IDD receiver structure. The detector and FEC decoder exchange soft information through iterations based on a priori updates.}}{30}{figure.caption.22}%
 \contentsline {figure}{\numberline {4.2}{\ignorespaces MMSE-SIC-IDD receiver. At each SIC stage, a user is detected, decoded, and softly cancelled. After all users are processed, decoder extrinsic information is used for the next a priori update.}}{31}{figure.caption.23}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces BLER comparison of HDS-MAP, MMSE-SIC-IDD, and MMSE-PIC-IDD for a coded three-user system with a $(1008,504)$ LDPC code.}}{42}{figure.caption.24}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces BLER comparison of HDS-MAP, MMSE-SIC-IDD, and MMSE-PIC-IDD for a coded four-user system with a $(1008,504)$ LDPC code.}}{43}{figure.caption.25}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces BLER comparison of HDS-MAP, MMSE-SIC-IDD, and MMSE-PIC-IDD for a coded six-user system with a $(1008,504)$ LDPC code.}}{44}{figure.caption.26}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Coded OFDM NOMA system model after CP removal and FFT. Each subcarrier provides a frequency-domain multiuser observation.}}{48}{figure.caption.28}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces OFDM multipath channel model with exponentially decayed tap powers. The first tap can be modeled as Rician while the remaining taps are Rayleigh.}}{49}{figure.caption.29}%
-\contentsline {figure}{\numberline {5.3}{\ignorespaces MMSE-SIC-IDD receiver structure for coded OFDM NOMA. Post-SINR or received-power metrics can be computed over subcarriers to determine the coded-block detection order, and a priori updates refine the soft estimates of all users.}}{50}{figure.caption.30}%
-\contentsline {figure}{\numberline {5.4}{\ignorespaces OFDM BLER comparison between quasi-static Rayleigh and one-tap Rician channel models.}}{51}{figure.caption.31}%
-\contentsline {figure}{\numberline {5.5}{\ignorespaces OFDM BLER comparison for different numbers of users.}}{51}{figure.caption.32}%
-\contentsline {figure}{\numberline {5.6}{\ignorespaces OFDM BLER comparison of post-SINR ordering and received-power/amplitude-based ordering.}}{52}{figure.caption.33}%
-\contentsline {figure}{\numberline {5.7}{\ignorespaces OFDM BLER comparison with dynamic post-SINR ordering, where the detection order is recalculated after each SIC stage.}}{53}{figure.caption.34}%
-\contentsline {figure}{\numberline {5.8}{\ignorespaces OFDM BLER comparison of MMSE-SIC-IDD and MMSE-PIC-IDD.}}{53}{figure.caption.35}%
-\contentsline {figure}{\numberline {5.9}{\ignorespaces OFDM comparison between OMA and NOMA. OMA assigns each user its own resource, while NOMA allows three users to share two resources with MMSE-SIC detection.}}{54}{figure.caption.36}%
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {6.1}{\ignorespaces Asynchronous uplink OFDM NOMA model. Timing offsets within the cyclic prefix appear as user-dependent phase rotations across subcarriers.}}{56}{figure.caption.37}%
-\contentsline {figure}{\numberline {6.2}{\ignorespaces MAI/ISI variance approximation for asynchronous OFDM NOMA. Timing offsets within or near the CP modify the effective channel and can be modeled as additional interference variance.}}{58}{figure.caption.38}%
-\contentsline {figure}{\numberline {6.3}{\ignorespaces Asynchronous single-resource BLER result with the receiver aligned to user $1$.}}{59}{figure.caption.39}%
-\contentsline {figure}{\numberline {6.4}{\ignorespaces Asynchronous BLER result for the $(2,3,0,3)$ system, case A.}}{59}{figure.caption.40}%
-\contentsline {figure}{\numberline {6.5}{\ignorespaces Asynchronous BLER result for the $(2,3,0,3)$ system, case B.}}{60}{figure.caption.41}%
-\contentsline {figure}{\numberline {6.6}{\ignorespaces Asynchronous BLER result for the $(2,3,0,3)$ system, case C.}}{60}{figure.caption.42}%
-\contentsline {figure}{\numberline {6.7}{\ignorespaces Asynchronous BLER result for the $(2,4,0,4)$ system, case A.}}{61}{figure.caption.43}%
-\contentsline {figure}{\numberline {6.8}{\ignorespaces Asynchronous BLER result for the $(2,4,0,4)$ system, case B.}}{61}{figure.caption.44}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Coded OFDM NOMA system model after CP removal and FFT. Each subcarrier provides a frequency-domain multiuser observation.}}{50}{figure.caption.25}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces OFDM multipath channel model with exponentially decayed tap powers. The first tap can be modeled as Rician while the remaining taps are Rayleigh.}}{51}{figure.caption.26}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces MMSE-SIC-IDD receiver structure for coded OFDM NOMA. Post-SINR or received-power metrics can be computed over subcarriers to determine the coded-block detection order, and a priori updates refine the soft estimates of all users.}}{52}{figure.caption.27}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces OFDM BLER comparison between quasi-static Rayleigh and one-tap Rician channel models.}}{53}{figure.caption.28}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces OFDM BLER comparison for different numbers of users.}}{53}{figure.caption.29}%
+\contentsline {figure}{\numberline {5.6}{\ignorespaces OFDM BLER comparison of post-SINR ordering and received-power/amplitude-based ordering.}}{54}{figure.caption.30}%
+\contentsline {figure}{\numberline {5.7}{\ignorespaces OFDM BLER comparison with dynamic post-SINR ordering, where the detection order is recalculated after each SIC stage.}}{55}{figure.caption.31}%
+\contentsline {figure}{\numberline {5.8}{\ignorespaces OFDM BLER comparison of MMSE-SIC-IDD and MMSE-PIC-IDD.}}{55}{figure.caption.32}%
+\contentsline {figure}{\numberline {5.9}{\ignorespaces OFDM comparison between OMA and NOMA. OMA assigns each user its own resource, while NOMA allows three users to share two resources with MMSE-SIC detection.}}{56}{figure.caption.33}%
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Asynchronous OFDM NOMA model. The receiver is aligned to user 1, and other users may have relative timing drifts $\Delta _k=\tau _k-\tau _1$.}}{58}{figure.caption.34}%
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Asynchronous BLER comparison for the $(2,3,0,3)$ system with $N_{\mathrm {CP}}=4$ and $\Delta _{\max }=4$.}}{59}{figure.caption.35}%
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Asynchronous BLER comparison for the $(2,3,0,3)$ system with $N_{\mathrm {CP}}=4$ and $\Delta _{\max }=5$.}}{60}{figure.caption.36}%
+\contentsline {figure}{\numberline {5.13}{\ignorespaces Asynchronous BLER comparison for the $(2,4,0,4)$ system with $N_{\mathrm {CP}}=4$ and $\Delta _{\max }=4$.}}{61}{figure.caption.37}%
+\contentsline {figure}{\numberline {5.14}{\ignorespaces Asynchronous BLER comparison for the $(2,4,0,4)$ system with $N_{\mathrm {CP}}=4$ and $\Delta _{\max }=5$.}}{61}{figure.caption.38}%
 \addvspace {10\p@ }
 \contentsfinish 
 \contentsfinish 

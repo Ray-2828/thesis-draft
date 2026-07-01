@@ -1,4 +1,4 @@
-\begin{thebibliography}{18}
+\begin{thebibliography}{17}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -31,13 +31,6 @@ Y.~Gao et~al.
   imperfect csi.
 \newblock \emph{IEEE Transactions on Vehicular Technology}, 67\penalty0
   (7):\penalty0 6647--6651, 2018.
-
-\bibitem[Haci et~al.(2017)Haci, Zhu, and Wang]{haci2017async}
-H.~Haci, H.~Zhu, and J.~Wang.
-\newblock Performance of non-orthogonal multiple access with a novel
-  asynchronous interference cancellation technique.
-\newblock \emph{IEEE Transactions on Communications}, 65\penalty0 (3):\penalty0
-  1319--1335, 2017.
 
 \bibitem[Hsu et~al.(2019)Hsu, Chang, Chang, Su, Yeh, Cheng, Lin, and
   Lin]{hsu2019gdma}

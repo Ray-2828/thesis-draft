@@ -1,9 +1,10 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.12) (preloaded format=xelatex 2026.6.11)  24 JUN 2026 02:31
+This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.12) (preloaded format=xelatex 2026.6.11)  29 JUN 2026 17:51
 entering extended mode
  restricted \write18 enabled.
+ file:line:error style messages enabled.
  %&-line parsing enabled.
-**./main.tex
-(main.tex
+**c:/Users/user/Desktop/論文/論文草稿/main.tex
+(c:/Users/user/Desktop/論文/論文草稿/main.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
 (ntuthesis.cls
@@ -1234,7 +1235,10 @@ Package: amsthm 2020/05/29 v2.20.6
 Package: ulem 2019/11/18
 \ULdepth=\dimen369
 ))
-(main.aux)
+(C:\Users\user\AppData\Local\Programs\MiKTeX\tex/latex/comment\comment.sty
+\CommentStream=\write4
+
+Excluding comment 'comment') (main.aux)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 50.
@@ -1341,8 +1345,8 @@ File: fc-english.def 2016/01/12
 )
 Package hyperref Info: Link coloring ON on input line 50.
 (main.out) (main.out)
-\@outlinefile=\write4
-\openout4 = `main.out'.
+\@outlinefile=\write5
+\openout5 = `main.out'.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
@@ -1520,8 +1524,8 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
  [10])
-\tf@toc=\write5
-\openout5 = `main.toc'.
+\tf@toc=\write6
+\openout6 = `main.toc'.
 
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
@@ -1543,31 +1547,13 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
  [13]
-Overfull \hbox (0.74171pt too wide) in paragraph at lines 20--20
- [][] [][][]\TU/TimesNewRoman(0)/m/n/12 BLER comparison of HDS-MAP, MMSE-SIC-ID
-D, and MMSE-PIC-IDD 
- []
-
-
-Overfull \hbox (0.74171pt too wide) in paragraph at lines 21--21
- [][] [][][]\TU/TimesNewRoman(0)/m/n/12 BLER comparison of HDS-MAP, MMSE-SIC-ID
-D, and MMSE-PIC-IDD 
- []
-
-
-Overfull \hbox (0.74171pt too wide) in paragraph at lines 22--22
- [][] [][][]\TU/TimesNewRoman(0)/m/n/12 BLER comparison of HDS-MAP, MMSE-SIC-ID
-D, and MMSE-PIC-IDD 
- []
-
-
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
  [14])
-\tf@lof=\write6
-\openout6 = `main.lof'.
+\tf@lof=\write7
+\openout7 = `main.lof'.
 
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
@@ -1578,8 +1564,8 @@ File: figures/seal.pdf Graphic file (type pdf)
  [16
 
 ] (main.lot)
-\tf@lot=\write7
-\openout7 = `main.lot'.
+\tf@lot=\write8
+\openout8 = `main.lot'.
 
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
@@ -1869,155 +1855,207 @@ Underfull \vbox (badness 2443) has occurred while \output is active []
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
  [40]
-Overfull \hbox (7.74815pt too wide) in paragraph at lines 406--407
-[]\TU/TimesNewRoman(0)/m/n/12 The coded simulations use BPSK modulation, Raylei
-gh block fading, and a $\OT1/cmr/m/n/12 (1008\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12
- 504)$
- []
-
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
-[41]
+
+[41] Excluding 'comment' comment.
+Overfull \hbox (27.41808pt too wide) in paragraph at lines 433--444
+\TU/TimesNewRoman(0)/m/n/12 SINR ordering, and MMSE-PIC-IDD. Unless otherwise s
+tated, the simulations use a $\OT1/cmr/m/n/12 (1008\OML/cmm/m/it/12 ; \OT1/cmr/
+m/n/12 504)$
+ []
+
+
+LaTeX Warning: Reference `fig:coded-unequal-beta' on page 42 undefined on input
+ line 445.
+
+Excluding 'comment' comment.
+File: figures/seal.pdf Graphic file (type pdf)
+<use figures/seal.pdf>
+ [42]
+
+LaTeX Warning: Reference `fig:coded-user3-equal' on page 43 undefined on input 
+line 455.
+
+Excluding 'comment' comment.
+
+LaTeX Warning: Reference `fig:coded-user4-equal' on page 43 undefined on input 
+line 465.
+
+
+LaTeX Warning: Reference `fig:coded-user3-equal' on page 43 undefined on input 
+line 465.
+
+Excluding 'comment' comment.
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
- [42]
-Underfull \hbox (badness 10000) in paragraph at lines 430--430
+ [43]
+
+LaTeX Warning: Reference `fig:coded-user6-equal' on page 44 undefined on input 
+line 475.
+
+Excluding 'comment' comment.
+
+LaTeX Warning: Reference `fig:coded-mixed-modulation' on page 44 undefined on i
+nput line 487.
+
+
+Overfull \hbox (5.52992pt too wide) in paragraph at lines 491--492
+[]\TU/TimesNewRoman(0)/m/n/12 The simulation results show that the IDD structur
+e is effective for coded multi-resource
+ []
+
+File: figures/seal.pdf Graphic file (type pdf)
+<use figures/seal.pdf>
+[44]
+Overfull \hbox (25.68521pt too wide) in paragraph at lines 497--498
+[]\TU/TimesNewRoman(0)/m/n/12 The unequal resource-weight results further show 
+that weak users can become interference-
+ []
+
+
+Overfull \hbox (21.10384pt too wide) in paragraph at lines 497--498
+\TU/TimesNewRoman(0)/m/n/12 limited if the resource-domain power distribution i
+s highly imbalanced. The mixed-modulation
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+File: figures/seal.pdf Graphic file (type pdf)
+<use figures/seal.pdf>
+ [45]
+Underfull \hbox (badness 10000) in paragraph at lines 511--511
 []|\TU/TimesNewRoman(0)/m/n/12 GDMA/ HDS-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--431
+Underfull \hbox (badness 10000) in paragraph at lines 511--512
 []|\TU/TimesNewRoman(0)/m/n/12 Multi-resource
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--431
+Underfull \hbox (badness 10000) in paragraph at lines 511--512
 \TU/TimesNewRoman(0)/m/n/12 PD-NOMA
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 432--432
+Underfull \hbox (badness 10000) in paragraph at lines 513--513
 []|\TU/TimesNewRoman(0)/m/n/12 Complex channel
  []
 
 
-Underfull \hbox (badness 6141) in paragraph at lines 432--432
+Underfull \hbox (badness 6141) in paragraph at lines 513--513
 \TU/TimesNewRoman(0)/m/n/12 gain and/ or signa-
  []
 
 
-Underfull \hbox (badness 1242) in paragraph at lines 432--432
+Underfull \hbox (badness 1242) in paragraph at lines 513--513
 []|\TU/TimesNewRoman(0)/m/n/12 Received-power dif-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 432--433
+Underfull \hbox (badness 10000) in paragraph at lines 513--514
 []|\TU/TimesNewRoman(0)/m/n/12 Resource-domain
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 432--433
+Underfull \hbox (badness 10000) in paragraph at lines 513--514
 \TU/TimesNewRoman(0)/m/n/12 channel vectors;
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 432--433
+Underfull \hbox (badness 10000) in paragraph at lines 513--514
 \TU/TimesNewRoman(0)/m/n/12 magnitude and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 432--433
+Underfull \hbox (badness 10000) in paragraph at lines 513--514
 \TU/TimesNewRoman(0)/m/n/12 phase through
  []
 
 
-Underfull \hbox (badness 1253) in paragraph at lines 433--433
+Underfull \hbox (badness 1253) in paragraph at lines 514--514
 []|\TU/TimesNewRoman(0)/m/n/12 Successive cancella-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 434--435
+Underfull \hbox (badness 10000) in paragraph at lines 515--516
 []|\TU/TimesNewRoman(0)/m/n/12 Approximately
  []
 
 
-Underfull \hbox (badness 7869) in paragraph at lines 434--435
+Underfull \hbox (badness 7869) in paragraph at lines 515--516
 \TU/TimesNewRoman(0)/m/n/12 mial, depending
  []
 
 
-Underfull \hbox (badness 1635) in paragraph at lines 434--435
+Underfull \hbox (badness 1635) in paragraph at lines 515--516
 \TU/TimesNewRoman(0)/m/n/12 on matrix inver-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 435--435
+Underfull \hbox (badness 10000) in paragraph at lines 516--516
 []|\TU/TimesNewRoman(0)/m/n/12 Best among com-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 435--435
+Underfull \hbox (badness 10000) in paragraph at lines 516--516
 []|\TU/TimesNewRoman(0)/m/n/12 Sensitive to error
  []
 
 
-Underfull \hbox (badness 2680) in paragraph at lines 436--436
+Underfull \hbox (badness 2680) in paragraph at lines 517--517
 \TU/TimesNewRoman(0)/m/n/12 feedback if IDD is
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 436--437
+Underfull \hbox (badness 10000) in paragraph at lines 517--518
 []|\TU/TimesNewRoman(0)/m/n/12 Competitive
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 436--437
+Underfull \hbox (badness 10000) in paragraph at lines 517--518
 \TU/TimesNewRoman(0)/m/n/12 with IDD and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 436--437
+Underfull \hbox (badness 10000) in paragraph at lines 517--518
 \TU/TimesNewRoman(0)/m/n/12 variance-aware
  []
 
 
-Underfull \hbox (badness 1642) in paragraph at lines 437--437
+Underfull \hbox (badness 1642) in paragraph at lines 518--518
 []|\TU/TimesNewRoman(0)/m/n/12 Higher due to joint
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 438--438
+Underfull \hbox (badness 10000) in paragraph at lines 519--519
 \TU/TimesNewRoman(0)/m/n/12 power disparity is
  []
 
 
-Underfull \hbox (badness 5475) in paragraph at lines 438--439
+Underfull \hbox (badness 5475) in paragraph at lines 519--520
 []|\TU/TimesNewRoman(0)/m/n/12 Medium loading
  []
 
 
-Overfull \hbox (13.86241pt too wide) in paragraph at lines 428--441
+Overfull \hbox (13.86241pt too wide) in paragraph at lines 509--522
  [][] 
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
+) (contents/chapter05.tex
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
- [43])
-(contents/chapter05.tex
+ [46]
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
- [44]
+ [47]
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
- [45]
-File: figures/seal.pdf Graphic file (type pdf)
-<use figures/seal.pdf>
- [46
+ [48
 
 ]
 Chapter 5.
@@ -2026,68 +2064,96 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
- [47]
-File: figures/seal.pdf Graphic file (type pdf)
-<use figures/seal.pdf>
-
-[48]
-File: figures/seal.pdf Graphic file (type pdf)
-<use figures/seal.pdf>
  [49]
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
- [50]
+
+[50]
+File: figures/seal.pdf Graphic file (type pdf)
+<use figures/seal.pdf>
+ [51]
+File: figures/seal.pdf Graphic file (type pdf)
+<use figures/seal.pdf>
+ [52]
 Underfull \vbox (badness 3657) has occurred while \output is active []
 
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
- [51])
-(contents/chapter06.tex
+ [53]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
- [52]
-File: figures/seal.pdf Graphic file (type pdf)
-<use figures/seal.pdf>
-
-[53]
-File: figures/seal.pdf Graphic file (type pdf)
-<use figures/seal.pdf>
  [54]
-Chapter 6.
 
-Underfull \vbox (badness 6675) has occurred while \output is active []
+Package natbib Warning: Citation `lin2023uplink' on page 55 undefined on input 
+line 90.
+
+
+Package natbib Warning: Citation `haci2017performance' on page 55 undefined on 
+input line 90.
+
+
+Package natbib Warning: Citation `abeywickrama2017over' on page 55 undefined on
+ input line 90.
+
+
+Package natbib Warning: Citation `minn2003robust' on page 55 undefined on input
+ line 90.
+
+
+Underfull \vbox (badness 1377) has occurred while \output is active []
 
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
- [55
+ [55]
 
-]
+Package natbib Warning: Citation `lin2023uplink' on page 56 undefined on input 
+line 92.
+
+
+Package natbib Warning: Citation `haci2017performance' on page 56 undefined on 
+input line 92.
+
+
+Package natbib Warning: Citation `minn2003robust' on page 56 undefined on input
+ line 92.
+
+
+Package natbib Warning: Citation `li2023transceiver' on page 56 undefined on in
+put line 92.
+
+
+Overfull \hbox (0.84987pt too wide) in paragraph at lines 96--97
+[]\TU/TimesNewRoman(0)/m/n/12 For a NOMA system, different users may have diffe
+rent timing offsets, which changes
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
+ [56]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[56]
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
  [57]
-Overfull \hbox (4.41469pt too wide) in paragraph at lines 57--58
-[]\TU/TimesNewRoman(0)/m/n/12 The asynchronous simulations evaluate BLER under 
-single-resource and two-resource
- []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
-[58]) (contents/chapter07.tex
-Underfull \vbox (badness 3657) has occurred while \output is active []
+ [58]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
- [59]
+ [59])
+(contents/chapter06.tex) (contents/chapter07.tex
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
-
-[60]
+ [60]
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
  [61]
@@ -2096,7 +2162,7 @@ File: figures/seal.pdf Graphic file (type pdf)
  [62
 
 ]
-Chapter 7.
+Chapter 6.
 
 Underfull \vbox (badness 1460) has occurred while \output is active []
 
@@ -2128,9 +2194,12 @@ File: figures/seal.pdf Graphic file (type pdf)
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
  [68])
+
+Package natbib Warning: There were undefined citations.
+
 File: figures/seal.pdf Graphic file (type pdf)
 <use figures/seal.pdf>
- [69] (main.aux)
+[69] (main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2022/08/05>
@@ -2140,16 +2209,19 @@ L3 programming layer <2022/08/05>
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.28pt have occurred.
 
+
+LaTeX Warning: There were undefined references.
+
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 1FBD302C24DFF6493790FA703A3DCFD5;9183.
+(rerunfilecheck)             Checksum: 18B1CB70F740286C351240103BEB77E5;9105.
  ) 
 Here is how much of TeX's memory you used:
- 32132 strings out of 402987
- 640903 string characters out of 5448731
- 1123489 words of memory out of 5000000
- 60259 multiletter control sequences out of 15000+600000
+ 32168 strings out of 402987
+ 641432 string characters out of 5448731
+ 1124478 words of memory out of 5000000
+ 60291 multiletter control sequences out of 15000+600000
  641414 words of font info for 129 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 99i,15n,131p,1307b,916s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,15n,131p,1210b,916s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 Output written on main.pdf (88 pages).

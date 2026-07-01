@@ -82,4 +82,112 @@ The OFDM simulations use BPSK modulation, $U=3$ users unless otherwise specified
 
 The OFDM results support several observations. First, channel selectivity can provide useful frequency-domain variation, which may help user separation when the receiver exploits subcarrier-dependent channel information. A one-tap Rician component and a quasi-static Rayleigh channel do not simply differ by average power; they also change the distribution of reliability across subcarriers, which affects how much the coded receiver can benefit from soft information. Second, the number of users directly affects the residual interference level and the reliability of SIC cancellation. As the loading increases, the receiver must separate more user vectors from the same resource set, and both ordering errors and residual cancellation errors become more influential.
 
-Third, post-SINR ordering is generally more robust than simple amplitude-based ordering because it accounts for both interference suppression and noise enhancement after MMSE filtering. Fourth, dynamic post-SINR ordering can be useful when the residual channel matrix changes substantially after cancellation, but its additional computation must be justified by the BLER gain. Fifth, MMSE-SIC-IDD and MMSE-PIC-IDD represent a latency-performance tradeoff: SIC can use current-stage decoder outputs, while PIC can process users more parallelly but depends more directly on the a priori soft estimates of all users. Finally, the OMA versus NOMA comparison highlights the core system tradeoff. OMA avoids multiuser interference but consumes more orthogonal resources; NOMA improves loading but requires stronger receiver processing. These results motivate the asynchronous study in the next chapter, where the OFDM receiver must also cope with user-dependent timing offsets.
+Third, post-SINR ordering is generally more robust than simple amplitude-based ordering because it accounts for both interference suppression and noise enhancement after MMSE filtering. Fourth, dynamic post-SINR ordering can be useful when the residual channel matrix changes substantially after cancellation, but its additional computation must be justified by the BLER gain. Fifth, MMSE-SIC-IDD and MMSE-PIC-IDD represent a latency-performance tradeoff: SIC can use current-stage decoder outputs, while PIC can process users more parallelly but depends more directly on the a priori soft estimates of all users. Finally, the OMA versus NOMA comparison highlights the core system tradeoff. OMA avoids multiuser interference but consumes more orthogonal resources; NOMA improves loading but requires stronger receiver processing. These results motivate the asynchronous study below, where the OFDM receiver must also cope with user-dependent timing offsets.
+
+\section{Asynchronous OFDM NOMA system}
+\label{sec:asyn}
+
+This section extends the coded OFDM NOMA system to asynchronous uplink transmission. In practical uplink transmissions, users may arrive at the BS with different timing offsets because of propagation delay, dynamic mobile environments, or limited timing-advance precision \cite{lin2023uplink,haci2017performance,abeywickrama2017over}. If the sum of the timing offset and the maximum channel delay spread remains within the cyclic prefix (CP), the OFDM subcarriers remain orthogonal and the timing offset only introduces a phase rotation in each subcarrier symbol \cite{minn2003robust}. Therefore, a timing offset within the CP can be represented as a subcarrier-dependent phase rotation, but the multiuser detector observes different effective channel responses for different users.
+
+The previous contents assume perfect symbol-level synchronization among users. In most related studies, the timing offset is treated as an impairment and the receiver attempts to estimate, compensate, or cancel it \cite{lin2023uplink,haci2017performance,minn2003robust}. In contrast, time offset can also be intentionally introduced into non-orthogonal multiple access (NOMA) to decrease inter-user interference and enhance performance \cite{li2023transceiver}. The purpose of this section is different from both directions. Rather than designing a timing-offset estimator or an intentional asynchronous transmission scheme, this section evaluates the tolerance of the considered receivers when timing offsets exist in the received signals.
+
+\subsection{Asynchronous Signal Model}
+
+For a NOMA system, different users may have different timing offsets, which changes their effective channel coefficients and may introduce multiple-access interference (MAI) or inter-symbol interference (ISI) depending on the receiver alignment. In this study, even when MAI and ISI-like effects may exist, the detector still processes the asynchronous signals through an effective phase-rotated channel model. This allows the robustness of MAP-IDD, MMSE-SIC-IDD, and MMSE-PIC-IDD to be compared under a common receiver assumption. Let $\tau_k$ denote the timing offset of user $k$ and set user 1 as the receiver timing reference, i.e., $\tau_1=0$. The relative timing drift of user $k$ is
+\begin{equation}
+    \Delta_k
+    =
+    \tau_k-\tau_1 .
+\end{equation}
+For a multipath OFDM channel, the phase-rotation representation is exact only when the received channel impulse response of user $k$ is fully contained in the FFT observation window after CP removal. Let $\tau_{\max}$ denote the maximum channel delay spread. In the discrete-time channel model of \eqref{eq:ofdm-frequency-response}, $\tau_{\max}=L_h-1$. Therefore, the sufficient CP condition is
+\begin{equation}
+    \Delta_k+\tau_{\max}
+    \leq
+    N_{\mathrm{CP}} .
+    \label{eq:async-cp-condition-ch5}
+\end{equation}
+Under this condition, the timing drift is absorbed into a phase rotation on each subcarrier, and the effective channel of user $k$ on subcarrier $q$ can be written as
+\begin{equation}
+    \tilde{H}_{k,q}
+    =
+    H_{k,q}
+    e^{-j2\pi q\Delta_k/N_{\mathrm{FFT}}}.
+    \label{eq:async-phase-rotation-ch5}
+\end{equation}
+The corresponding received signal is modeled as
+\begin{equation}
+    y_q
+    =
+    \sum_{k=1}^{U}
+    \tilde{H}_{k,q}x_{k,q}
+    +
+    n_q .
+    \label{eq:async-ofdm-received-ch5}
+\end{equation}
+This model treats the asynchronous transmission as a user-dependent effective channel variation. Although timing offsets in NOMA do not create MAI by themselves, because MAI is inherent when multiple users share the same resources, they can aggravate inter-user interference by causing symbol misalignment. When \eqref{eq:async-cp-condition-ch5} is not satisfied, part of the delayed multipath signal can fall outside the useful FFT window, and additional MAI/ISI-like interference can appear.
+
+\figplaceholder{figures/asynchronous_system_model.pdf}{Asynchronous OFDM NOMA model. The receiver is aligned to user 1, and other users may have relative timing drifts $\Delta_k=\tau_k-\tau_1$.}{fig:ofdm-async-system-model}
+
+In the simulations, the asynchronous impairment is still processed by the detector through the effective phase-rotated channel in \eqref{eq:async-phase-rotation-ch5}. Thus, when \eqref{eq:async-cp-condition-ch5} is violated, this receiver model becomes an approximation rather than an exact OFDM diagonalization. The purpose is to compare the asynchronous tolerance of MAP-IDD, MMSE-SIC-IDD, and MMSE-PIC-IDD under this practical receiver assumption rather than to design a timing-offset estimator.
+
+% \subsection{MAI and ISI Variance Approximation}
+% The following approximation is kept for possible future discussion, but it is not included in the current thesis text.
+% When timing offsets or excess delays cause part of a multipath component to fall outside the useful FFT window, residual ISI can be approximated as additional noise.
+% Let the excess delay of the $t$th tap of user $k$ be
+% \begin{equation}
+%     e_{k,t}
+%     =
+%     \Delta_k+t-N_{\mathrm{CP}} .
+% \end{equation}
+% The received power of the $t$th tap can be weighted by the large-scale fading coefficient as $\beta_k|h_{r,k,t}|^2$.
+% An approximate total ISI power ratio can then be expressed by
+% \begin{equation}
+%     P^{\mathrm{total}}_{\mathrm{ISI}}
+%     =
+%     \sum_{r=1}^{R}
+%     \sum_{k=1}^{U}
+%     \sum_{t=0}^{L_h-1}
+%     \beta_k |h_{r,k,t}|^2
+%     \frac{e_{k,t}}{Q}.
+% \end{equation}
+% The total received signal power is
+% \begin{equation}
+%     P^{\mathrm{total}}_{\mathrm{rx}}
+%     =
+%     \sum_{r=1}^{R}
+%     \sum_{k=1}^{U}
+%     \sum_{t=0}^{L_h-1}
+%     \beta_k |h_{r,k,t}|^2 .
+% \end{equation}
+% The total ISI ratio used for the equivalent noise variance is
+% \begin{equation}
+%     \alpha^{\mathrm{total}}_{\mathrm{ISI}}
+%     =
+%     \frac{P^{\mathrm{total}}_{\mathrm{ISI}}}
+%     {P^{\mathrm{total}}_{\mathrm{rx}}}.
+% \end{equation}
+% If the ISI component is modeled as additional noise, the effective SINR can be approximated by
+% \begin{equation}
+%     \mathrm{SINR}_{\mathrm{eff}}
+%     =
+%     \frac{(1-\alpha^{\mathrm{total}}_{\mathrm{ISI}})E_b}
+%     {N_0+\alpha^{\mathrm{total}}_{\mathrm{ISI}}E_b}.
+% \end{equation}
+
+\subsection{Asynchronous Simulation Results}
+
+The asynchronous simulations consider two-resource systems with either three users, denoted by $(2,3,0,3)$, or four users, denoted by $(2,4,0,4)$. The receiver is aligned to user 1, and the relative timing drifts of the other users are randomly selected from $[0,\Delta_{\max}]$. The CP length is $N_{\mathrm{CP}}=4$. Since the simulations use a five-tap channel, the strict CP condition depends on both the timing drift and the maximum channel delay spread, as shown in \eqref{eq:async-cp-condition-ch5}. Therefore, $\Delta_{\max}=4$ represents the case where the timing drift itself is bounded by the CP length, while $\Delta_{\max}=5$ further includes timing drifts beyond the CP length and leads to stronger MAI/ISI-like effects.
+
+\figplaceholder{figures/async_2303_delta4.pdf}{Asynchronous BLER comparison for the $(2,3,0,3)$ system with $N_{\mathrm{CP}}=4$ and $\Delta_{\max}=4$.}{fig:ofdm-async-2303-delta4}
+
+\figplaceholder{figures/async_2303_delta5.pdf}{Asynchronous BLER comparison for the $(2,3,0,3)$ system with $N_{\mathrm{CP}}=4$ and $\Delta_{\max}=5$.}{fig:ofdm-async-2303-delta5}
+
+For the three-user case, Figs.~\ref{fig:ofdm-async-2303-delta4} and \ref{fig:ofdm-async-2303-delta5} show that the receivers have similar BLER trends when the timing drifts are moderate. When $I_{\mathrm{out}}=1$, MMSE-SIC-IDD can approach or slightly outperform MAP-IDD in the simulated region. This suggests that the phase-rotated effective channels can change the separability of the users, and a receiver that is strongest in the synchronous likelihood model is not necessarily the most robust under asynchronous transmission.
+
+\figplaceholder{figures/async_2404_delta4.pdf}{Asynchronous BLER comparison for the $(2,4,0,4)$ system with $N_{\mathrm{CP}}=4$ and $\Delta_{\max}=4$.}{fig:ofdm-async-2404-delta4}
+
+\figplaceholder{figures/async_2404_delta5.pdf}{Asynchronous BLER comparison for the $(2,4,0,4)$ system with $N_{\mathrm{CP}}=4$ and $\Delta_{\max}=5$.}{fig:ofdm-async-2404-delta5}
+
+For the four-user case, Figs.~\ref{fig:ofdm-async-2404-delta4} and \ref{fig:ofdm-async-2404-delta5} show a similar robustness trend. This is noteworthy because in the corresponding synchronous four-user system, MAP detection can significantly outperform MMSE-SIC. Under asynchronous transmission, however, MMSE-SIC-IDD with decoder feedback can become competitive because it operates on the effective channel and performs stage-by-stage interference suppression.
+
+The two ordering strategies in MMSE-SIC-IDD also show almost identical BLER in several asynchronous cases. This is particularly evident when $\Delta_{\max}=5$, where MAI/ISI-like interference is present. This observation does not imply that ordering is unimportant in general. Rather, it indicates that when the dominant impairment comes from asynchronous interference and residual multiuser uncertainty, the gain of a more refined ordering metric can become less visible. Overall, the asynchronous results show that MMSE-SIC-IDD has stronger robustness than expected from the synchronous comparison, while MAP-IDD remains a useful benchmark for joint detection under idealized likelihood assumptions.

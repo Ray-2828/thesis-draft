@@ -381,41 +381,122 @@ The variance-aware MMSE filter follows the same form as \eqref{eq:variance-aware
 
 \section{MAP-IDD}
 
-MAP-IDD provides a coded joint-detection baseline. For user a priori LLRs $L^{(t)}_{c_k,\ell,0}$, the MAP detector evaluates each candidate vector $\bm{x}^{(q)}\in\{\pm1\}^U$ using
+MAP-IDD provides a coded joint-detection baseline. In this receiver, the detector follows the maximum a posteriori (MAP) rule. The detector-decoder exchange follows the same IDD structure described previously: the detector generates bit-level LLRs, the FEC decoder refines them, and the decoder extrinsic information is fed back as the a priori information for the next update.
+
+At symbol time $\ell$, the MAP detector jointly enumerates all multiuser symbol candidates. Let
+$\bm{s}^{(q)}=[s^{(q)}_1,s^{(q)}_2,\ldots,s^{(q)}_U]^T$ denote the $q$th candidate vector, where $s^{(q)}_k\in\mathcal{S}_k$. The a priori LLRs $L^{(t)}_{c_k,\ell,m}$ are used in the detector by converting each candidate bit label into its log probability. Therefore, the MAP metric used for the $q$th candidate can be written as
 \begin{equation}
     \Lambda_q
     =
-    -\frac{\norm{\bm{y}_\ell-\bm{H}\bm{x}^{(q)}}^2}{N_0}
+    -\rho_{\mathrm{MAP}}
+    \frac{\norm{\bm{y}_\ell-\bm{H}\bm{s}^{(q)}}^2}{2\sigma^2}
     +
-    \frac{1}{2}\sum_{k=1}^{U}x_k^{(q)}L^{(t)}_{c_k,\ell,0}.
+    \sum_{k=1}^{U}
+    \sum_{m=0}^{M_k-1}
+    \log P^{a,(t)}
+    \left(
+    b_{k,\ell,m}
+    =
+    b_{k,m}\left(s^{(q)}_k\right)
+    \right),
     \label{eq:map-idd-metric}
 \end{equation}
-The LLR of user $k$ is
+where $\rho_{\mathrm{MAP}}$ is the detector metric scaling factor. In the implementation, $\rho_{\mathrm{MAP}}=0.7$, which corresponds to the scaling used before adding the a priori log-probability terms. Equivalently, the second term in \eqref{eq:map-idd-metric} is implemented by the same LLR-to-bit-probability rule as \eqref{eq:bit-prior-from-llr}.
+
+For the $m$th bit of user $k$, define the candidate sets
 \begin{equation}
-    L_{k,\ell}
+    \mathcal{X}_{k,m,b}
+    =
+    \left\{
+    \bm{s}^{(q)}:
+    b_{k,m}\left(s^{(q)}_k\right)=b
+    \right\},
+    \qquad b\in\{0,1\}.
+\end{equation}
+The MAP detector output LLR is then
+\begin{equation}
+    L_{c_{k,m}}
     =
     \log
-    \frac{\sum_{q:x_k^{(q)}=+1}\exp(\Lambda_q)}
-    {\sum_{q:x_k^{(q)}=-1}\exp(\Lambda_q)} .
+    \frac{
+    \sum_{\bm{s}^{(q)}\in\mathcal{X}_{k,m,0}}
+    \exp(\Lambda_q)}
+    {
+    \sum_{\bm{s}^{(q)}\in\mathcal{X}_{k,m,1}}
+    \exp(\Lambda_q)} .
     \label{eq:map-idd-llr}
 \end{equation}
-This receiver provides strong BLER performance but retains exponential complexity in $U$. It is therefore useful as a benchmark for coded MMSE-SIC-IDD and MMSE-PIC-IDD.
+This output is then passed to the FEC decoder, and the decoder feedback is used for the next a priori update as in the preceding IDD receiver descriptions. MAP-IDD provides strong BLER performance but retains exponential complexity in $U$ because it enumerates all multiuser symbol candidates. It is therefore useful as a benchmark for coded MMSE-SIC-IDD and MMSE-PIC-IDD.
 
 \section{Coded Simulation Results}
 
-The coded simulations use BPSK modulation, Rayleigh block fading, and a $(1008,504)$ LDPC code. The receiver candidates include HDS-MAP, MMSE-SIC-IDD with post-SINR ordering, and MMSE-PIC-IDD. Equal large-scale fading $(\beta_1,\ldots,\beta_U)=(1,\ldots,1)$ and equal transmit power $P_1=\cdots=P_U=1$ are used in the coded multiuser comparisons.
+This section evaluates the coded multi-resource NOMA system with IDD. The coded BLER performance is compared among MAP-IDD, MMSE-SIC-IDD with dynamic post-SINR ordering, and MMSE-PIC-IDD. Unless otherwise stated, the simulations use a $(1008,504)$ LDPC code over a block-fading channel, and the number of outer IDD iterations is denoted by $I_{\mathrm{out}}$. The purpose of the following results is to clarify how decoder feedback, SIC/PIC cancellation, system loading, and modulation order affect the coded receiver performance.
+\begin{comment}
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.48\linewidth]{figures/coded_unequal_beta_sic_map.jpg}
+    \hfill
+    \includegraphics[width=0.48\linewidth]{figures/coded_unequal_beta_pic.jpg}
+    \caption{Coded BLER performance for three users with unequal resource weights, where $R=2$ and $(\beta_1,\beta_2,\beta_3)=(1,0.1,0.01)$. The left figure compares MMSE-SIC-IDD with MAP-IDD, while the right figure shows MMSE-PIC-IDD with different outer iterations.}
+    \label{fig:coded-unequal-beta}
+\end{figure}
+\end{comment}
 
-\figplaceholder{figures/coded_bler_three_users.pdf}{BLER comparison of HDS-MAP, MMSE-SIC-IDD, and MMSE-PIC-IDD for a coded three-user system with a $(1008,504)$ LDPC code.}{fig:coded-bler-three-users}
+According to Fig.~\ref{fig:coded-unequal-beta}, the BLER performance is strongly affected by the resource-weight imbalance. User 1, which has the largest resource weight, achieves the best performance, while user 3, which has the smallest resource weight, becomes much more difficult to decode. This result indicates that the effective reliability of each user is not only determined by the channel and code, but also by the resource-domain power distribution. For MMSE-SIC-IDD, one outer IDD iteration improves the BLER of all users and makes the performance very close to MAP-IDD. This shows that decoder-aided SIC cancellation can effectively reduce error propagation because the cancelled symbols are refined by the FEC decoder. In contrast, MMSE-PIC-IDD requires more IDD iterations to obtain reliable a priori information. When $I_{\mathrm{out}}$ is small, the parallel cancellation is inaccurate and the weak user remains interference-limited at high $E_b/N_0$.
+\begin{comment}
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.82\linewidth]{figures/coded_user3_equal_beta.jpg}
+    \caption{Coded BLER performance for the three-user case with equal resource weights and equal transmit powers.}
+    \label{fig:coded-user3-equal}
+\end{figure}
+\end{comment}
 
-\figplaceholder{figures/coded_bler_four_users.pdf}{BLER comparison of HDS-MAP, MMSE-SIC-IDD, and MMSE-PIC-IDD for a coded four-user system with a $(1008,504)$ LDPC code.}{fig:coded-bler-four-users}
+Fig.~\ref{fig:coded-user3-equal} shows the BLER performance for the three-user case with equal resource weights. MAP-IDD gives the best performance because it performs joint detection over all possible superimposed signals. However, MMSE-SIC-IDD with one outer iteration approaches the MAP-IDD curve closely. The gain comes from the iterative exchange between the detector and the decoder: the decoder feedback improves the symbol reliability, and the variance-aware MMSE filter uses the updated a priori information to perform more reliable interference suppression. MMSE-PIC-IDD also improves as $I_{\mathrm{out}}$ increases, but the curve with $I_{\mathrm{out}}=0$ exhibits a clear error floor. Therefore, in the three-user case, MMSE-SIC-IDD provides a better performance-complexity tradeoff than MMSE-PIC-IDD when only a small number of IDD iterations is allowed.
+\begin{comment}
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.82\linewidth]{figures/coded_user4_equal_beta.jpg}
+    \caption{Coded BLER performance for the four-user case with equal resource weights and equal transmit powers.}
+    \label{fig:coded-user4-equal}
+\end{figure}
+\end{comment}
 
-\figplaceholder{figures/coded_bler_six_users.pdf}{BLER comparison of HDS-MAP, MMSE-SIC-IDD, and MMSE-PIC-IDD for a coded six-user system with a $(1008,504)$ LDPC code.}{fig:coded-bler-six-users}
+Fig.~\ref{fig:coded-user4-equal} compares the receivers when the number of users is increased to four. Compared with Fig.~\ref{fig:coded-user3-equal}, the performance gap between MAP-IDD and the MMSE-based receivers becomes more visible because the multiuser interference is stronger. Nevertheless, MMSE-SIC-IDD still benefits from the IDD process, and the curve with $I_{\mathrm{out}}=1$ is clearly better than that with $I_{\mathrm{out}}=0$. It also outperforms MMSE-PIC-IDD in the simulated region. This result shows that, under moderate loading, the ordered and decoder-aided cancellation of MMSE-SIC-IDD is more effective than parallel cancellation based only on the current a priori estimates.
+\begin{comment}
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.82\linewidth]{figures/coded_user6_equal_beta.jpg}
+    \caption{Coded BLER performance for the six-user case with equal resource weights and equal transmit powers.}
+    \label{fig:coded-user6-equal}
+\end{figure}
+\end{comment}
 
-The coded results show a different trend from uncoded BER. Although MAP-based detection remains a strong benchmark, MMSE-SIC-IDD becomes much more competitive after channel coding is introduced. Decoder-aided soft cancellation reduces the impact of early SIC errors, and variance-aware filtering prevents the receiver from treating uncertain decisions as perfectly known. This is the key distinction between uncoded SIC and coded SIC-IDD: in the uncoded case, cancellation quality is determined primarily by the detector output at the current SNR, while in the coded case the decoder can use code constraints across the whole block to refine the reliability of the cancellation signal.
+As shown in Fig.~\ref{fig:coded-user6-equal}, the performance gap becomes significant in the six-user case. MAP-IDD still maintains a steep BLER decrease as $E_b/N_0$ increases, whereas MMSE-SIC-IDD and MMSE-PIC-IDD both exhibit high-SNR error floors. This implies that, in a heavily loaded system, the dominant impairment is no longer thermal noise but residual multiuser interference after linear filtering and cancellation. Although the IDD iteration still improves MMSE-SIC-IDD, the improvement is not sufficient to close the gap to MAP-IDD. Therefore, MAP-IDD is more robust to the increase in the number of users, while the two MMSE-based receivers become more sensitive to system loading.
+\begin{comment}
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.48\linewidth]{figures/coded_mixed_modulation_iter1.jpg}
+    \hfill
+    \includegraphics[width=0.48\linewidth]{figures/coded_mixed_modulation_iter0.jpg}
+    \caption{User-wise coded BLER performance for mixed modulation with BPSK, QPSK, and 16QAM users. The results compare MMSE-SIC-IDD and MAP-IDD with different a priori update conditions.}
+    \label{fig:coded-mixed-modulation}
+\end{figure}
+\end{comment}
 
-For three- and four-user cases, MMSE-SIC-IDD can approach MAP-IDD even with a small number of a priori update iterations. This improvement mainly comes from the inner SIC pass, where decoder outputs of previously detected users are used as soft cancellation terms for the following SIC stages. MAP-IDD still provides favorable BLER performance because it evaluates the coded multiuser likelihood jointly. As the number of users increases, however, MMSE-SIC-IDD becomes more restricted because the residual interference level increases and the ordering problem becomes more difficult. Nevertheless, the coded low-complexity receivers remain attractive because MAP-IDD requires enumeration of all multiuser candidates and therefore becomes rapidly more expensive as $U$ grows.
+Fig.~\ref{fig:coded-mixed-modulation} presents the coded BLER performance when different users employ different modulation orders. The BPSK user has the best BLER performance, followed by the QPSK user, while the 16QAM user is the most sensitive to noise and residual interference. This trend is expected because higher-order modulation has a smaller Euclidean distance between constellation points. In this mixed-modulation case, MAP-IDD still outperforms MMSE-SIC-IDD for all users. Moreover, comparing the results with and without a priori update shows that MAP-IDD can still benefit from decoder feedback even under block fading. The a priori information helps the MAP detector assign larger probabilities to symbol combinations that are more consistent with the decoder output, thereby improving the reliability of the final LLRs.
 
-The coded comparison also shows that for a three-user two-resource coded system, coded MMSE-SIC-IDD can perform close to coded HDS-CDMA with MAP-based detection in the unequal-large-scale-fading case. In the equal-large-scale-fading case, coded HDS-CDMA remains slightly better in the high-SNR region because the joint detector still makes fuller use of the multiuser likelihood. The gain from increasing the number of a priori update iterations is limited under block fading because all coded symbols experience the same channel realization, limiting the amount of independent reliability diversity available to the iterative receiver. This observation suggests that the value of additional IDD iterations depends not only on the code but also on the channel variation across the coded block.
+\section{Comparison and summary}
+
+The simulation results show that the IDD structure is effective for coded multi-resource NOMA receivers, but the amount of gain depends on the detector type, system loading, resource-weight distribution, and modulation order. For MAP-IDD, the detector already provides highly reliable soft information by jointly evaluating the possible superimposed signals. Therefore, the additional gain from the a priori update is smaller than that of the MMSE-based receivers in simple BPSK cases. However, MAP-IDD still achieves the best BLER performance in all simulated scenarios and remains robust when the number of users or modulation order increases.
+
+MMSE-SIC-IDD provides a favorable tradeoff between performance and complexity. By combining dynamic post-SINR ordering, variance-aware MMSE filtering, and decoder-aided cancellation, it can approach MAP-IDD in the three-user case and still performs well in the four-user case. The key advantage is that SIC cancellation is performed after channel decoding, so the cancelled symbols are more reliable than raw detector decisions. This reduces error propagation and improves the quality of the following SIC stages. However, MMSE-SIC-IDD is still based on linear filtering and sequential cancellation. When the system becomes heavily loaded, the accumulated residual interference causes a clear performance floor.
+
+MMSE-PIC-IDD has the advantage of parallel processing and lower receiver latency because all users can be detected simultaneously. However, its cancellation quality strongly depends on the reliability of the a priori information. If the number of outer iterations is insufficient, the soft estimates used for parallel cancellation are inaccurate, and the receiver can suffer from an error floor. With more IDD iterations, MMSE-PIC-IDD improves, but it generally remains less reliable than MMSE-SIC-IDD in the moderate-loading cases considered here.
+
+The unequal resource-weight results further show that weak users can become interference-limited if the resource-domain power distribution is highly imbalanced. The mixed-modulation results show that higher-order modulation users are more vulnerable to residual interference and require more reliable soft information. Overall, MAP-IDD is the most robust receiver but has the highest complexity, which grows rapidly with the number of users and modulation order. MMSE-SIC-IDD is a practical alternative for moderate system loading, while MMSE-PIC-IDD is more attractive when parallelism and latency are prioritized. These observations indicate that practical coded NOMA receiver design should jointly consider detector complexity, IDD iteration number, cancellation reliability, resource allocation, and modulation assignment.
+
+
 
 \section{Receiver Tradeoffs}
 
